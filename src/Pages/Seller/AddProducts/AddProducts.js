@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 const AddProducts = () => {
     const [startDate, setStartDate] = useState(new Date());
+    const [loading, setLoading] = useState(false);
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm({
@@ -30,6 +31,7 @@ const AddProducts = () => {
        
     //add product
     const handelAddProduct = (data)=> {
+      setLoading(true);
         const date = format(startDate, 'PP');
         const img = data.productImage[0];
         const formData = new FormData();
@@ -75,8 +77,9 @@ const AddProducts = () => {
                 .then(data => {
                   console.log(data);
                   if(data.acknowledged){
-                    navigate("/dashboard/my-products");
+                    setLoading(false);
                     toast.success('Product Added Successfully!');
+                    navigate("/dashboard/my-products");
                   }
                 })
               }
@@ -145,7 +148,6 @@ const AddProducts = () => {
                   <input
                     {...register("sellerEmail", { required: true })}
                     id="email"
-                    
                     type="email"
                     disabled
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
@@ -260,7 +262,7 @@ const AddProducts = () => {
                   </div>
                 </div>
               </div>
-              <div className='my-3'>
+              <div className="my-3">
                 <label className="block text-sm font-medium text-white">
                   Product Image
                 </label>
@@ -286,14 +288,19 @@ const AddProducts = () => {
                   className="block h-36 w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 ></textarea>
               </div>
-              <p className='text-center mt-2 text-white font-semibold'>Note: Make Sure You Fill-Up Every Filed!</p>
+              <p className="text-center mt-2 text-white font-semibold">
+                Note: Make Sure You Fill-Up Every Filed!
+              </p>
               <div className="flex justify-center mt-6">
-                
-                <input
-                  type="submit"
-                  value="Publish Product"
-                  className="btn btn-outline text-white"
-                />
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Publish Product"
+                    className="btn btn-outline text-white"
+                  />
+                )}
               </div>
             </form>
           </section>

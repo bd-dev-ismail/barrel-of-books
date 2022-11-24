@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import Loader from '../../Shared/Loader/Loader';
 
 const Register = () => {
-   const [role, setRole] = useState('Seller');
+   const [role, setRole] = useState('Buyer');
    const {register, handleSubmit, formState: {errors}} = useForm();
    const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
@@ -185,7 +185,6 @@ const Register = () => {
                       name="radio-1"
                       value="Seller"
                       className="radio mr-1 radio-primary"
-                      defaultChecked
                     />
                     <label htmlFor="radio-1" className="mr-2">
                       Seller
@@ -196,6 +195,7 @@ const Register = () => {
                       type="radio"
                       name="radio-1"
                       value="Buyer"
+                      defaultChecked
                       className="radio radio-primary mr-1"
                     />
                     <label htmlFor="radio-1">Buyer</label>

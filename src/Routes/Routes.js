@@ -4,7 +4,7 @@ import Main from "../Layout/Main";
 import AllSeller from "../Pages/Admin/AllSeller/AllSeller";
 import AllUsers from "../Pages/Admin/AllUsers/AllUsers";
 import Blog from "../Pages/Blog/Blog";
-import Categories from "../Pages/Categories/Categories";
+import CategoriesById from "../Pages/Categories/CategoriesById";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -15,66 +15,67 @@ import AddProducts from "../Pages/Seller/AddProducts/AddProducts";
 import MyProducts from "../Pages/Seller/MyProducts/MyProducts";
 
 const router = createBrowserRouter([
-    {
-        path: '/' ,
-        element: <Main/>,
-        errorElement: <ErrorPage/>,
-        children: [
-            {
-                path: '/',
-                element: <Home/>
-            },
-            {
-                path: '/categories',
-                element: <Categories/>
-            },
-            {
-                path: '/blog',
-                element: <Blog/>
-            },
-            {
-                path: '/login',
-                element: <Login/>
+  {
+    path: "/",
+    element: <Main />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/categoriesById/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/categories/${params.id}`),
+        element: <CategoriesById />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    errorElement: <ErrorPage />,
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <MyOrders />,
+      },
 
-            },
-            {
-                path: '/register',
-                element: <Register/>
-            }
-        ]
-    },
-    {
-        path: '/dashboard',
-        errorElement: <ErrorPage/>,
-        element: <DashboardLayout/>,
-        children: [
-            {
-                path: '/dashboard',
-                element: <MyOrders/>
-            },
-            {
-                path: '/dashboard/wish-list',
-                element: <MyWishList/>
-            },
-            {
-                path: '/dashboard/add-products',
-                element: <AddProducts/>
-            },
-            {
-                path: '/dashboard/my-products',
-                element: <MyProducts/>
-            },
-            {
-                path: '/dashboard/all-seller',
-                element: <AllSeller/>
-            },
-            {
-                path: '/dashboard/all-user',
-                element: <AllUsers/>
-            },
-            
-        ]
-    }
+      {
+        path: "/dashboard/wish-list",
+        element: <MyWishList />,
+      },
+      {
+        path: "/dashboard/add-products",
+        element: <AddProducts />,
+      },
+      {
+        path: "/dashboard/my-products",
+        element: <MyProducts />,
+      },
+      {
+        path: "/dashboard/all-seller",
+        element: <AllSeller />,
+      },
+      {
+        path: "/dashboard/all-user",
+        element: <AllUsers />,
+      },
+    ],
+  },
 ]);
 
 export default router;

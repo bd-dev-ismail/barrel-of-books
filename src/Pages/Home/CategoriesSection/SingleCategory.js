@@ -1,9 +1,17 @@
 import React from 'react';
-import { FaLongArrowAltRight, IconName } from "react-icons/fa";
+import { FaLongArrowAltRight } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 const SingleCategory = ({category}) => {
     const {name, image, _id} = category;
+    const navigate = useNavigate();
+    const handalNavigate = (id)=> {
+      navigate(`/categoriesById/${id}`);
+    }
     return (
-      <div className="card w-96  mb-5 bg-base-100 shadow-xl cursor-pointer image-full relative">
+      <div
+        onClick={() => handalNavigate(_id)}
+        className="card w-96  mb-5 bg-base-100 shadow-xl cursor-pointer image-full relative"
+      >
         <figure>
           <img src={image} alt="Shoes" />
         </figure>
