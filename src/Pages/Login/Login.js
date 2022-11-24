@@ -1,13 +1,22 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
+     const {
+       register,
+       handleSubmit,
+       formState: { errors },
+     } = useForm();
+     const handleLogin = (data) => {
+       console.log(data);
+     };
     return (
       <div>
         <div className="container mx-auto mt-20">
           <div className="flex justify-center h-full items-center">
             <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-              <form className="card-body">
+              <form onSubmit={handleSubmit(handleLogin)} className="card-body">
                 <div className="text-center">
                   <h3 className="text-3xl">Login</h3>
                 </div>
@@ -16,25 +25,39 @@ const Login = () => {
                     <span className="label-text">Email</span>
                   </label>
                   <input
+                    {...register("email", { required: true })}
                     type="text"
                     placeholder="email"
                     className="input input-bordered"
                   />
+                  {errors.email && (
+                    <span className="mt-3 text-red-600">
+                      Email field is required
+                    </span>
+                  )}
                 </div>
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Password</span>
                   </label>
                   <input
-                    type="text"
+                    {...register("password", { required: true })}
+                    type="password"
                     placeholder="password"
                     className="input input-bordered"
                   />
+                  {errors.password && (
+                    <span className="mt-3 text-red-600">
+                      Password field is required
+                    </span>
+                  )}
                   <label className="label">
                     <Link>Forget Password?</Link>
                   </label>
                   <label className="label">
-                    <Link to="/register" className='hover:text-primary'>New in Barrel Of Books? Please Register!</Link>
+                    <Link to="/register" className="hover:text-primary">
+                      New in Barrel Of Books? Please Register!
+                    </Link>
                   </label>
                 </div>
                 <div className="form-control mt-6">
@@ -43,7 +66,7 @@ const Login = () => {
                   </button>
                 </div>
               </form>
-              <div className='text-center'>
+              <div className="text-center">
                 <button type="submit" className="btn mb-6 w-[320px] text-white">
                   Login With Google
                 </button>
