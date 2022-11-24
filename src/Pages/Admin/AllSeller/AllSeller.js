@@ -1,8 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import Loader from '../../../Shared/Loader/Loader';
+import ConfrimDelete from './ConfrimDelete';
 
 const AllSeller = () => {
+  const [removeSeller, setRemoveSeller] = useState(null);
+  const closeModal = () => {
+    return  setRemoveSeller(null);
+  };
   const { data: sellers, isLoading } = useQuery({
     queryKey: ["seller"],
     queryFn: async () => {
@@ -11,6 +16,9 @@ const AllSeller = () => {
       return data;
     },
   });
+  const handalDelete = (id) => {
+    console.log(id);
+  }
     return (
       <div>
         <h3 className="text-3xl font-semibold my-5">All Sellers</h3>
@@ -44,7 +52,6 @@ const AllSeller = () => {
                             />
                           </div>
                         </div>
-                        
                       </div>
                     </td>
                     <td>
@@ -53,9 +60,13 @@ const AllSeller = () => {
                     </td>
                     <td>{seller?.email}</td>
                     <th>
-                      <button className="btn btn-secondary text-white btn-sm">
-                        Delete Seller
-                      </button>
+                      <label
+                        onClick={() => setRemoveSeller(seller)}
+                        htmlFor="confrimDelete"
+                        className="btn btn-sm btn-error text-white"
+                      >
+                        Delete
+                      </label>
                     </th>
                   </tr>
                 ))}
@@ -63,6 +74,14 @@ const AllSeller = () => {
             )}
           </table>
         </div>
+        {removeSeller && (
+        <ConfrimDelete
+          successAction={handalDelete}
+          removeSeller={removeSeller}
+          closeModal={closeModal}
+          title="Are You Sure? You Want to Delete?"
+        />
+        )}
       </div>
     );
 };
