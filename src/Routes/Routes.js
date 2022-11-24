@@ -1,11 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
+import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
+import AllSeller from "../Pages/Admin/AllSeller/AllSeller";
+import AllUsers from "../Pages/Admin/AllUsers/AllUsers";
 import Blog from "../Pages/Blog/Blog";
 import Categories from "../Pages/Categories/Categories";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
+import MyOrders from "../Pages/MyOrders/MyOrders";
+import MyWishList from "../Pages/MyOrders/MyWishList";
 import Register from "../Pages/Register/Register";
+import AddProducts from "../Pages/Seller/AddProducts/AddProducts";
+import MyProducts from "../Pages/Seller/MyProducts/MyProducts";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +41,38 @@ const router = createBrowserRouter([
                 path: '/register',
                 element: <Register/>
             }
+        ]
+    },
+    {
+        path: '/dashboard',
+        errorElement: <ErrorPage/>,
+        element: <DashboardLayout/>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <MyOrders/>
+            },
+            {
+                path: '/dashboard/wish-list',
+                element: <MyWishList/>
+            },
+            {
+                path: '/dashboard/add-products',
+                element: <AddProducts/>
+            },
+            {
+                path: '/dashboard/my-products',
+                element: <MyProducts/>
+            },
+            {
+                path: '/dashboard/all-seller',
+                element: <AllSeller/>
+            },
+            {
+                path: '/dashboard/all-user',
+                element: <AllUsers/>
+            },
+            
         ]
     }
 ]);

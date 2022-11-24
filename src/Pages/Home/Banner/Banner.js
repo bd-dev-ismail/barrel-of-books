@@ -8,6 +8,7 @@ import banner1 from "../../../assets/banner1.webp";
 import banner2 from "../../../assets/banner2.webp";
 
 import { Link } from "react-router-dom";
+import './Banner.css'
 const Banner = () => {
   SwiperCore.use([Autoplay]);
   return (
@@ -28,16 +29,22 @@ const Banner = () => {
               backgroundImage: `url(${banner1})`,
             }}
           >
-            
             <div className="container mx-auto">
               <div className=" absolute flex justify-start transform -translate-y-1/2 left-30 top-1/2 text-white">
-                <div className="max-w-md">
-                  <h1 className="mb-5 lg:text-7xl text-5xl font-bold">
-                    Fashion <br /> Changing <br /> Always
+                <div className="max-w-md px-5 lg:px-0">
+                  <h1 className="mb-5 lg:text-5xl text-2xl  font-bold">
+                    Only We Provides, Second Hand Books With Best Quality.
                   </h1>
-
-                  <Link to="/shop">
-                    <button className="btn btn-primary">Shop Now</button>
+                  <p className="text-gray-200 mb-3">
+                    Despite the enormous quantity of books, how few people read!
+                    And if one reads profitably, one would realize how much
+                    stupid stuff the vulgar herd is content to swallow every
+                    day.
+                  </p>
+                  <Link to="/blog">
+                    <button className="btn btn-primary text-white">
+                      Our Blogs
+                    </button>
                   </Link>
                 </div>
               </div>
@@ -51,23 +58,28 @@ const Banner = () => {
               backgroundImage: `url(${banner2})`,
             }}
           >
-            
             <div className="container mx-auto">
               <div className=" absolute flex justify-start transform -translate-y-1/2 left-30 top-1/2 text-white">
-                <div className="max-w-md">
-                  <h1 className="mb-5 lg:text-7xl text-5xl font-bold">
-                    Fashion <br /> Changing <br /> Always
+                <div className="max-w-md px-5 lg:px-0">
+                  <h1 className="mb-5 lg:text-5xl text-2xl font-bold">
+                    Find Your Books & Buys With Reasoneable Price.
                   </h1>
-
-                  <Link to="/shop">
-                    <button className="btn btn-primary">Shop Now</button>
+                  <p className="text-gray-200 mb-3">
+                    Despite the enormous quantity of books, how few people read!
+                    And if one reads profitably, one would realize how much
+                    stupid stuff the vulgar herd is content to swallow every
+                    day.
+                  </p>
+                  <Link to="/blog">
+                    <button className="btn btn-primary text-white">
+                      Our Blogs
+                    </button>
                   </Link>
                 </div>
               </div>
             </div>
           </div>
         </SwiperSlide>
-       
       </Swiper>
     </div>
   );
