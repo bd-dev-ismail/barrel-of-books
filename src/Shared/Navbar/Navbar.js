@@ -20,8 +20,27 @@ const Navbar = () => {
          <li className="text-white uppercase hover:text-gray-700">
            <Link to="/">Home</Link>
          </li>
-         <li className="text-white uppercase hover:text-gray-700">
-           <Link to="/">Categories</Link>
+         <li>
+           <div className="dropdown dropdown-hover">
+             <label
+               tabIndex={0}
+               className="text-white uppercase hover:text-gray-700 m-1"
+             >
+               Categoreis
+             </label>
+             <ul
+               tabIndex={0}
+               className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52"
+             >
+               <li>
+                 <a>Item 1</a>
+               </li>
+               <li>
+                 <a>Item 2</a>
+               </li>
+             </ul>
+           </div>
+           {/* <Link to="/">Categories</Link> */}
          </li>
          <li className="text-white uppercase hover:text-gray-700">
            <Link to="/dashboard">Dashboard</Link>

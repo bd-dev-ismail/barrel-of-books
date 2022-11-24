@@ -1,31 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
-import { AuthContext } from '../../context/AuthProvider/AuthProvider';
-import Loader from '../../Shared/Loader/Loader';
+import React from 'react';
+import Loader from '../../../Shared/Loader/Loader';
 
-const MyOrders = () => {
-  const {user} = useContext(AuthContext);
-  const {data: orders, isLoading} = useQuery({
-    queryKey: ['orders', user?.email],
-    queryFn: async()=> {
-      const res = await fetch(
-        `http://localhost:5000/orders?email=${user?.email}`
-      );
-      const data = await res.json();
-      return data;
-    }
-  })
+const AllBuyer = () => {
+     const { data: buyers, isLoading } = useQuery({
+       queryKey: ["buyer"],
+       queryFn: async () => {
+         const res = await fetch(`http://localhost:5000/buyer`);
+         const data = await res.json();
+         return data;
+       },
+     });
     return (
       <div>
-        <h3 className="text-3xl font-semibold my-5">My Orders</h3>
+        <h3 className="text-3xl font-semibold my-5">All buyers</h3>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
               <tr>
                 <th></th>
+                <th>Image</th>
                 <th>Name</th>
-                <th>Price</th>
-                <th>Meeting Location</th>
+                <th>Email</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -33,8 +29,8 @@ const MyOrders = () => {
               <Loader />
             ) : (
               <tbody>
-                {orders?.map((order, idx) => (
-                  <tr key={order?._id}>
+                {buyers?.map((buyer, idx) => (
+                  <tr key={buyer?._id}>
                     <th>
                       <label>{idx + 1}</label>
                     </th>
@@ -43,21 +39,21 @@ const MyOrders = () => {
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
                             <img
-                              src={order?.bookImage}
+                              src={buyer?.image}
                               alt="Avatar Tailwind CSS Component"
                             />
                           </div>
                         </div>
-                        <div>
-                          <div className="font-bold">{order?.bookName}</div>
-                        </div>
                       </div>
                     </td>
-                    <td>${order?.bookPrice}</td>
-                    <td>{order?.location}</td>
+                    <td>
+                      {" "}
+                      <div className="font-bold">{buyer?.name}</div>
+                    </td>
+                    <td>{buyer?.email}</td>
                     <th>
-                      <button className="btn btn-primary text-white btn-sm">
-                        Pay
+                      <button className="btn btn-secondary text-white btn-sm">
+                        Delete Buyer
                       </button>
                     </th>
                   </tr>
@@ -70,4 +66,4 @@ const MyOrders = () => {
     );
 };
 
-export default MyOrders;
+export default AllBuyer;

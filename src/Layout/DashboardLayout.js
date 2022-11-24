@@ -51,10 +51,10 @@ const DashboardLayout = () => {
                   <Link to="/dashboard/my-products">My Products</Link>
                 </li>
                 <li className="hover:bg-primary hover:text-white uppercase font-semibold">
-                  <Link to="/dashboard/all-seller">All Seller</Link>
+                  <Link to="/dashboard/all-sellers">All Seller</Link>
                 </li>
                 <li className="hover:bg-primary hover:text-white uppercase font-semibold">
-                  <Link to="/dashboard/all-user">All Users</Link>
+                  <Link to="/dashboard/all-buyers">All Buyers</Link>
                 </li>
               </ul>
             </div>

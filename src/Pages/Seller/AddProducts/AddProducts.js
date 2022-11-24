@@ -16,6 +16,7 @@ const AddProducts = () => {
     const { register, handleSubmit } = useForm({
       defaultValues: {
         sellerEmail: user?.email,
+        sellerName: user?.name,
       },
     });
     
@@ -60,10 +61,10 @@ const AddProducts = () => {
                   productDesc: data.productDesc,
                   resalePrice: data.resalePrice,
                   sellerEmail: data.sellerEmail,
-                  sellerPhone: data.sellerPhone,
+                  sellerName: data.sellerName,
                   yearOfPurchase: data.yearOfPurchase,
                   date,
-                  status: 'unverifyed',
+                  status: "unverifyed",
                 };
                 console.log(product);
                 fetch(`http://localhost:5000/products`, {
@@ -156,14 +157,15 @@ const AddProducts = () => {
                 <div>
                   <label
                     className="text-white dark:text-gray-200"
-                    htmlFor="mobileNumber"
+                    htmlFor="sellerName"
                   >
-                    Seller Phone
+                    Seller Name
                   </label>
                   <input
-                    {...register("sellerPhone", { required: true })}
-                    id="mobileNumber"
-                    type="number"
+                    {...register("sellerName", { required: true })}
+                    id="sellerName"
+                    type="text"
+
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                 </div>

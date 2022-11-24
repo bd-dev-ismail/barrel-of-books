@@ -33,7 +33,7 @@ const Login = () => {
             name: user.displayName,
             email: user.email,
             image: user.photoURL,
-            role: 'Seller',
+            role: 'Buyer',
           };fetch("http://localhost:5000/users", {
             method: "POST",
             headers: {
