@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
-
+import Loader from '../../Shared/Loader/Loader';
 const Login = () => {
      const {
        register,
@@ -10,21 +11,50 @@ const Login = () => {
        formState: { errors },
      } = useForm();
      const { loginUser, loginWithGoogle } = useContext(AuthContext);
+     const [loading, setLoading] = useState(false);
+     const navigate = useNavigate();
      const handleLogin = (data) => {
+      setLoading(true);
        loginUser(data.email, data.password)
-       .then(result => {
-        const user = result.user;
-        console.log(user);
-       })
-       .catch(err => console.log(err))
+         .then((result) => {
+           const user = result.user;
+           console.log(user);
+           toast.success("Successfully Login !!");
+           setLoading(false);
+         })
+         .catch((err) => toast.error(err.message));
      };
      const handalGoogleLogin = ()=> {
+      
         loginWithGoogle()
         .then(result => {
           const user = result.user;
-          console.log(user);
+          const userInfo = {
+            name: user.displayName,
+            email: user.email,
+            image: user.photoURL,
+            role: 'Seller',
+          };fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(userInfo),
+          })
+            .then((res) => res.json())
+            .then((userdata) => {
+              console.log(userdata);
+              if (userdata.acknowledged) {
+                setLoading(false);
+                
+                toast.success("Successfully Login With Google!!");
+                console.log(user);
+              }
+            });
+          
+          
         })
-        .catch(err => console.log(err))
+        .catch(err => toast.error(err.message))
      }
     return (
       <div>
@@ -77,12 +107,16 @@ const Login = () => {
                 </div>
                 <div className="form-control mt-6">
                   <button type="submit" className="btn btn-primary text-white">
-                    Login
+                    {loading ? <Loader /> : "Login"}
                   </button>
                 </div>
               </form>
               <div className="text-center">
-                <button onClick={handalGoogleLogin} type="submit" className="btn mb-6 w-[320px] text-white">
+                <button
+                  onClick={handalGoogleLogin}
+                  type="submit"
+                  className="btn mb-6 w-[320px] text-white"
+                >
                   Login With Google
                 </button>
               </div>

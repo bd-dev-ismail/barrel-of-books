@@ -1,16 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import toast from "react-hot-toast";
 const Navbar = () => {
      const [isMenuOpen, setIsMenuOpen] = useState(false);
      const {user, logout} = useContext(AuthContext);
+     const navigate = useNavigate();
      const handelLogOut = ()=> {
       logout()
       .then(()=> {
-        console.log('logout');
+        navigate('/');
+        toast.error("Logout Successfull !!");
       })
-      .catch(err=> console.log(err))
+      
      }
      const menuItem = (
        <>
@@ -26,28 +29,24 @@ const Navbar = () => {
          <li className="text-white uppercase hover:text-gray-700">
            <Link to="/blog">Blog</Link>
          </li>
-         <li>
-           <Link to="/login">
-             <button className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
-               Login
+         {user?.uid ? (
+           <li>
+             <button
+               onClick={handelLogOut}
+               className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border"
+             >
+               Logout
              </button>
-           </Link>
-         </li>
-
-         <li>
-           <button onClick={handelLogOut} className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
-             Logout
-           </button>
-         </li>
-         <div className="avatar">
-           <div className="w-8 rounded">
-             <img
-               src={user?.photoURL}
-               alt="Tailwind-CSS-Avatar-component"
-             />
-           </div>
-         </div>
-         <li>{user?.displayName}</li>
+           </li>
+         ) : (
+           <li>
+             <Link to="/login">
+               <button className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
+                 Login
+               </button>
+             </Link>
+           </li>
+         )}
        </>
      );
     return (

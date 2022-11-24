@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import { FaCalendarAlt } from 'react-icons/fa';
 import { useQuery } from '@tanstack/react-query';
 import Loader from '../../../Shared/Loader/Loader';
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 const AddProducts = () => {
     const [startDate, setStartDate] = useState(new Date());
-    const {register, handleSubmit} = useForm();
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const { register, handleSubmit } = useForm({
+      defaultValues: {
+        sellerEmail: user?.email,
+      },
+    });
+    
     //get categories
     const { data: categories = [], isLoading } = useQuery({
       queryKey: ["categories"],
@@ -17,13 +27,62 @@ const AddProducts = () => {
         return data;
       },
     });
+       
     //add product
     const handelAddProduct = (data)=> {
-        // data.preventDeault();
-        console.log(data);
         const date = format(startDate, 'PP');
-        console.log(date);
+        const img = data.productImage[0];
+        const formData = new FormData();
+        formData.append('image', img);
+        
+        const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_key}`;
+        if (data.resalePrice > data.originalPrice){
+          return toast.error('Resale Price Do not increase From Orginial Price');
+        }
+          fetch(url, {
+            method: "POST",
+            body: formData,
+          })
+            .then((res) => res.json())
+            .then((imgData) => {
+              console.log(imgData);
+              if (imgData.success) {
+                console.log(imgData.data.display_url);
+                const product = {
+                  productImage: imgData.data.display_url,
+                  productName: data.productName,
+                  productConditon: data.productConditon,
+                  productCategoryId: data.productCategoryId,
+                  originalPrice: data.originalPrice,
+                  location: data.location,
+                  productDesc: data.productDesc,
+                  resalePrice: data.resalePrice,
+                  sellerEmail: data.sellerEmail,
+                  sellerPhone: data.sellerPhone,
+                  yearOfPurchase: data.yearOfPurchase,
+                  date,
+                  status: 'unverifyed',
+                };
+                console.log(product);
+                fetch(`http://localhost:5000/products`, {
+                  method: 'POST',
+                  headers: {
+                    'content-type': 'application/json'
+                  },
+                  body: JSON.stringify(product)
+                })
+                .then(res => res.json())
+                .then(data => {
+                  console.log(data);
+                  if(data.acknowledged){
+                    navigate("/dashboard/my-products");
+                    toast.success('Product Added Successfully!');
+                  }
+                })
+              }
+            });
     }
+  
     return (
       <div>
         <div>
@@ -86,7 +145,9 @@ const AddProducts = () => {
                   <input
                     {...register("sellerEmail", { required: true })}
                     id="email"
+                    
                     type="email"
+                    disabled
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
                 </div>
@@ -225,7 +286,9 @@ const AddProducts = () => {
                   className="block h-36 w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 ></textarea>
               </div>
+              <p className='text-center mt-2 text-white font-semibold'>Note: Make Sure You Fill-Up Every Filed!</p>
               <div className="flex justify-center mt-6">
+                
                 <input
                   type="submit"
                   value="Publish Product"

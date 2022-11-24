@@ -1,13 +1,19 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import Loader from '../../Shared/Loader/Loader';
 
 const Register = () => {
-   const [role, setRole] = useState('');
+   const [role, setRole] = useState('Seller');
    const {register, handleSubmit, formState: {errors}} = useForm();
-   const { registerUser, updateUserProfile } = useContext(AuthContext);
+   const [loading, setLoading] = useState(false);
+   const navigate = useNavigate();
+   const { registerUser, updateUserProfile, loginWithGoogle } =
+     useContext(AuthContext);
    const handleRegister = (data) => {
+    setLoading(true);
     const image = data.photo[0];
     const formData = new FormData();
     formData.append('image', image);
@@ -28,6 +34,28 @@ const Register = () => {
           updateUserProfile(data.name, imgData.data.display_url)
             .then(() => {
               console.log("success done done done");
+              const userInfo = {
+                name: data.name,
+                email: data.email,
+                image: imgData.data.display_url,
+                role: role
+              };
+              fetch("http://localhost:5000/users", {
+                method: 'POST',
+                headers: {
+                  'content-type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
+              })
+              .then(res => res.json())
+              .then(userdata => {
+                console.log(userdata);
+                if (userdata.acknowledged) {
+                  setLoading(false);
+                  navigate('/');
+                  toast.success('Registration Successful!');
+                }
+              });
             })
             .catch((err) => console.log(err));
         })
@@ -35,7 +63,38 @@ const Register = () => {
       }
     })
    };
-   
+   //with google
+    const handalGoogleLogin = () => {
+      
+      loginWithGoogle()
+        .then((result) => {
+          const user = result.user;
+          const userInfo = {
+            name: user.displayName,
+            email: user.email,
+            image: user.photoURL,
+            role: "Seller",
+          };
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(userInfo),
+          })
+            .then((res) => res.json())
+            .then((userdata) => {
+              console.log(userdata);
+              if (userdata.acknowledged) {
+                
+                navigate("/");
+                toast.success("Successfully Login With Google!!");
+                console.log(user);
+              }
+            });
+        })
+        .catch((err) => toast.error(err.message));
+    };
     return (
       <div>
         <div className="container mx-auto mt-10">
@@ -149,12 +208,16 @@ const Register = () => {
                 </div>
                 <div className="form-control mt-6">
                   <button type="submit" className="btn btn-primary text-white">
-                    Register
+                    {loading ? <Loader /> : "Register"}
                   </button>
                 </div>
               </form>
               <div className="text-center">
-                <button type="submit" className="btn mb-6 w-[320px] text-white">
+                <button
+                  onClick={handalGoogleLogin}
+                  type="submit"
+                  className="btn mb-6 w-[320px] text-white"
+                >
                   Register With Google
                 </button>
               </div>
