@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 const Navbar = () => {
      const [isMenuOpen, setIsMenuOpen] = useState(false);
+     const {user, logout} = useContext(AuthContext);
+     const handelLogOut = ()=> {
+      logout()
+      .then(()=> {
+        console.log('logout');
+      })
+      .catch(err=> console.log(err))
+     }
      const menuItem = (
        <>
          <li className="text-white uppercase hover:text-gray-700">
@@ -26,10 +35,19 @@ const Navbar = () => {
          </li>
 
          <li>
-           <button className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
+           <button onClick={handelLogOut} className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
              Logout
            </button>
          </li>
+         <div className="avatar">
+           <div className="w-8 rounded">
+             <img
+               src={user?.photoURL}
+               alt="Tailwind-CSS-Avatar-component"
+             />
+           </div>
+         </div>
+         <li>{user?.displayName}</li>
        </>
      );
     return (

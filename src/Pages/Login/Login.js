@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
 const Login = () => {
      const {
@@ -8,9 +9,23 @@ const Login = () => {
        handleSubmit,
        formState: { errors },
      } = useForm();
+     const { loginUser, loginWithGoogle } = useContext(AuthContext);
      const handleLogin = (data) => {
-       console.log(data);
+       loginUser(data.email, data.password)
+       .then(result => {
+        const user = result.user;
+        console.log(user);
+       })
+       .catch(err => console.log(err))
      };
+     const handalGoogleLogin = ()=> {
+        loginWithGoogle()
+        .then(result => {
+          const user = result.user;
+          console.log(user);
+        })
+        .catch(err => console.log(err))
+     }
     return (
       <div>
         <div className="container mx-auto mt-20">
@@ -67,7 +82,7 @@ const Login = () => {
                 </div>
               </form>
               <div className="text-center">
-                <button type="submit" className="btn mb-6 w-[320px] text-white">
+                <button onClick={handalGoogleLogin} type="submit" className="btn mb-6 w-[320px] text-white">
                   Login With Google
                 </button>
               </div>

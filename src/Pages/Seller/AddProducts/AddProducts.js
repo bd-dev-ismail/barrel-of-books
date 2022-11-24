@@ -27,7 +27,7 @@ const AddProducts = () => {
     return (
       <div>
         <div>
-          <section className="max-w-4xl p-6 mx-auto bg-primary rounded-md shadow-md dark:bg-gray-800 mt-10">
+          <section className="max-w-4xl p-6 mx-auto bg-primary rounded-md shadow-md dark:bg-gray-800 mt-5">
             <h1 className="text-xl font-bold text-white capitalize dark:text-white">
               Add Products
             </h1>
@@ -53,11 +53,25 @@ const AddProducts = () => {
                     className="text-white dark:text-gray-200"
                     htmlFor="productPrice"
                   >
-                    Product Price
+                    Originial Price
                   </label>
                   <input
-                    {...register("productPrice", { required: true })}
-                    id="productPrice"
+                    {...register("originalPrice", { required: true })}
+                    id="originalPrice"
+                    type="number"
+                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="text-white dark:text-gray-200"
+                    htmlFor="resalePrice"
+                  >
+                    Resale Price
+                  </label>
+                  <input
+                    {...register("resalePrice", { required: true })}
+                    id="resalePrice"
                     type="number"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
@@ -107,6 +121,7 @@ const AddProducts = () => {
                     <option value="Syhlet">Syhlet</option>
                     <option value="Barishal">Barishal</option>
                     <option value="Noakhali">Noakhali</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
@@ -157,7 +172,7 @@ const AddProducts = () => {
                   </label>
                   <select
                     {...register("yearOfPurchase", { required: true })}
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   >
                     <option value="2018">2018</option>
                     <option value="2019">2019</option>
@@ -174,12 +189,6 @@ const AddProducts = () => {
                   >
                     Date
                   </label>
-                  {/* <input
-                    id="date"
-                    type="date"
-                    name="date"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                  /> */}
                   <div className="relative">
                     <DatePicker
                       className="py-2 border rounded-md w-full px-4"
@@ -189,19 +198,19 @@ const AddProducts = () => {
                     <FaCalendarAlt className="absolute top-3 right-5" />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-white">
-                    Product Image
-                  </label>
-                  <div className="space-y-1 text-center">
-                    <div>
-                      <input
-                        {...register("productImage", { required: true })}
-                        id="proudctImage"
-                        type="file"
-                        className="mt-1 text-white flex justify-center px-4 py-2 w-full border-2 border-gray-300 border-dashed rounded-md"
-                      />
-                    </div>
+              </div>
+              <div className='my-3'>
+                <label className="block text-sm font-medium text-white">
+                  Product Image
+                </label>
+                <div className="space-y-1 text-center">
+                  <div>
+                    <input
+                      {...register("productImage", { required: true })}
+                      id="proudctImage"
+                      type="file"
+                      className="mt-1 text-white flex justify-center px-4 py-2 w-full border-2 border-gray-300 border-dashed rounded-md"
+                    />
                   </div>
                 </div>
               </div>

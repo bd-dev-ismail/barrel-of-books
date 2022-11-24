@@ -1,13 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 
 const Register = () => {
    const [role, setRole] = useState('');
    const {register, handleSubmit, formState: {errors}} = useForm();
+   const { registerUser, updateUserProfile } = useContext(AuthContext);
    const handleRegister = (data) => {
-    console.log(data);
-   }
+    const image = data.photo[0];
+    const formData = new FormData();
+    formData.append('image', image);
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_key}`;
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+    })
+    .then(res => res.json())
+    .then(imgData => {
+      console.log(imgData);
+      if(imgData.success){
+        console.log(imgData.data.display_url);
+        registerUser(data.email, data.password)
+        .then(result => {
+          const user = result.user;
+          console.log(user);
+          updateUserProfile(data.name, imgData.data.display_url)
+            .then(() => {
+              console.log("success done done done");
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch(err => console.log(err))
+      }
+    })
+   };
+   
     return (
       <div>
         <div className="container mx-auto mt-10">
