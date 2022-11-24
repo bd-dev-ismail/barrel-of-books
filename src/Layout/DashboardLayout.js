@@ -15,7 +15,7 @@ const DashboardLayout = () => {
                   htmlFor="my-drawer-2"
                   className="btn btn-primary my-5  drawer-button lg:hidden text-white"
                 >
-                  <svg class="w-5 text-white mr-3" viewBox="0 0 24 24">
+                  <svg className="w-5 text-white mr-3" viewBox="0 0 24 24">
                     <path
                       fill="currentColor"
                       d="M23,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h22c0.6,0,1,0.4,1,1S23.6,13,23,13z"

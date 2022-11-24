@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Loader = () => {
-    return <progress className="progress progress-primary w-60"></progress>;
+    return (
+      <div className='text-center'>
+        <progress className="progress progress-secondary w-60"></progress>
+      </div>
+    );
 };
 
 export default Loader;
