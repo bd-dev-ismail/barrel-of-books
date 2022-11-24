@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import Loader from '../../../Shared/Loader/Loader';
 import ConfrimDelete from './ConfrimDelete';
 
@@ -8,16 +9,27 @@ const AllSeller = () => {
   const closeModal = () => {
     return  setRemoveSeller(null);
   };
-  const { data: sellers, isLoading } = useQuery({
+  const { data: sellers, isLoading, refetch } = useQuery({
     queryKey: ["seller"],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/seller`);
       const data = await res.json();
       return data;
-    },
+    }
   });
-  const handalDelete = (id) => {
-    console.log(id);
+  const handalDelete = (sellerr) => {
+    
+    fetch(`http://localhost:5000/seller/${sellerr?._id}`, {
+      method: 'DELETE',
+      
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.deletedCount > 0) {
+        refetch();
+        toast.warning("Delete Seller Successfully!");
+      }
+    })
   }
     return (
       <div>
@@ -56,7 +68,7 @@ const AllSeller = () => {
                     </td>
                     <td>
                       {" "}
-                      <div className="font-bold">{seller?.name}</div>
+                      <p className="font-bold">{seller?.name}</p>
                     </td>
                     <td>{seller?.email}</td>
                     <th>
