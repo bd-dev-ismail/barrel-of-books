@@ -1,6 +1,15 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+import { FaCalendarAlt } from 'react-icons/fa';
 const AddProducts = () => {
+      const [startDate, setStartDate] = useState(new Date());
+    const handelAddProduct = (e)=> {
+        e.preventDefault();
+        console.log(startDate);
+        const date = format(startDate, 'PP');
+        console.log(date);
+    }
     return (
       <div>
         {/* <h3 className="text-3xl font-semibold my-3">Add Products</h3> */}
@@ -10,7 +19,7 @@ const AddProducts = () => {
             <h1 class="text-xl font-bold text-white capitalize dark:text-white">
               Add Products
             </h1>
-            <form>
+            <form onSubmit={handelAddProduct}>
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                 <div>
                   <label class="text-white dark:text-gray-200" for="username">
@@ -112,11 +121,21 @@ const AddProducts = () => {
                   >
                     Date
                   </label>
-                  <input
+                  {/* <input
                     id="date"
                     type="date"
+                    name="date"
                     class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                  />
+                  /> */}
+                  <div className='relative'>
+                    <DatePicker
+                    
+                      className="py-2 border rounded-md w-full px-4"
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                    />
+                    <FaCalendarAlt className='absolute top-3 right-5'/>
+                  </div>
                 </div>
                 <div>
                   <label class="text-white dark:text-gray-200" for="desc">
@@ -158,13 +177,15 @@ const AddProducts = () => {
               </div>
 
               <div class="flex justify-end mt-6">
-                <button class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600">
-                  Save
+                <button
+                  type="submit"
+                  class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600"
+                >
+                  Publish Product
                 </button>
               </div>
             </form>
           </section>
-
         </div>
       </div>
     );
