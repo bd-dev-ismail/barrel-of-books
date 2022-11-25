@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import { useToken } from '../../hooks/useToken';
 import Loader from '../../Shared/Loader/Loader';
@@ -32,7 +33,10 @@ const Login = () => {
             
              setLoading(false);
          })
-         .catch((err) => toast.error(err.message));
+         .catch((err) => {
+          toast.error(err.message);
+           setLoading(false);
+         });
      };
      const handalGoogleLogin = ()=> {
       

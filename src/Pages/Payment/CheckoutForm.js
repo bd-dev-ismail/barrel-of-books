@@ -1,5 +1,8 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 import Loader from "../../Shared/Loader/Loader";
 
 const CheckoutForm = ({ order }) => {
@@ -10,6 +13,7 @@ const CheckoutForm = ({ order }) => {
   const [transitionId, setTransitionId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { bookPrice, email, name, _id, bookID } = order;
   useEffect(() => {
     setLoading(true);
@@ -47,6 +51,7 @@ const CheckoutForm = ({ order }) => {
       console.log(error);
     } else {
       setCardError("");
+      setLoading(false);
     }
     setSuccess("");
     setLoading(true);
@@ -62,6 +67,7 @@ const CheckoutForm = ({ order }) => {
       });
     if (confrimError) {
       setCardError(confrimError.message);
+      setLoading(false);
       return;
     }
     if (paymentIntent.status === "succeeded") {
@@ -88,6 +94,12 @@ const CheckoutForm = ({ order }) => {
           if (data.insertedId) {
             setSuccess(`Congress Your Payment Completed`);
             setTransitionId(paymentIntent.id);
+            Swal.fire(
+              "Congress Your Payment Completed!",
+              `Your Payment Id is: ${paymentIntent.id}`,
+              "success"
+            );
+            navigate('/dashboard');
           }
         });
     }
@@ -116,11 +128,11 @@ const CheckoutForm = ({ order }) => {
         />
         {loading && <Loader />}
         <button
-          className="btn btn-sm text-white btn-primary my-5"
+          className="btn btn-sm text-white btn-primary mt-10"
           type="submit"
           disabled={!stripe || !clientSecret || loading}
         >
-          Pay
+          Confirm Payment
         </button>
       </form>
       <p className="text-red-600 my-3">{cardError}</p>
