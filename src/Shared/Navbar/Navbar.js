@@ -18,14 +18,14 @@ const Navbar = () => {
      }
      const menuItem = (
        <>
-         <li className="text-white uppercase hover:text-gray-700">
+         <li className="text-white uppercase font-semibold hover:text-gray-700">
            <Link to="/">Home</Link>
          </li>
          <li>
            <div className="dropdown dropdown-hover">
              <label
                tabIndex={0}
-               className="text-white uppercase hover:text-gray-700 m-1"
+               className="text-white uppercase font-semibold hover:text-gray-700 m-1"
              >
                Categoreis
              </label>
@@ -43,17 +43,17 @@ const Navbar = () => {
            </div>
            {/* <Link to="/">Categories</Link> */}
          </li>
-         <li className="text-white uppercase hover:text-gray-700">
+         <li className="text-white uppercase font-semibold hover:text-gray-700">
            <Link to="/dashboard">Dashboard</Link>
          </li>
-         <li className="text-white uppercase hover:text-gray-700">
+         <li className="text-white uppercase font-semibold hover:text-gray-700">
            <Link to="/blog">Blog</Link>
          </li>
          {user?.uid ? (
            <li>
              <button
                onClick={handelLogOut}
-               className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border"
+               className=" py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border"
              >
                Logout
              </button>
@@ -61,7 +61,7 @@ const Navbar = () => {
          ) : (
            <li>
              <Link to="/login">
-               <button className=" py-[6px] px-[14px] cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
+               <button className=" py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
                  Login
                </button>
              </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
      );
     return (
       <div className="bg-primary">
-        <div className="px-4 py-5 container mx-auto md:px-24 lg:px-8">
+        <div className="px-4 py-4 container mx-auto md:px-24 lg:px-8">
           <div className="relative flex items-center justify-between">
             <Link
               to="/"

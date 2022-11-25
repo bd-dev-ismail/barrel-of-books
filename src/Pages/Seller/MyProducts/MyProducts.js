@@ -55,7 +55,7 @@ const MyProducts = () => {
   }
     return (
       <div>
-        <h3 className="text-3xl font-semibold my-5">
+        <h3 className="text-3xl text-center font-semibold my-5">
           My <span className="text-primary">Products</span>
         </h3>
         <div className="overflow-x-auto w-full">

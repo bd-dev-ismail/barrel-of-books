@@ -61,7 +61,7 @@ const AllSeller = () => {
   }
     return (
       <div>
-        <h3 className="text-3xl font-semibold my-5">
+        <h3 className="text-3xl text-center font-semibold my-5">
           All <span className="text-primary">Sellers</span>
         </h3>
         <div className="overflow-x-auto w-full">

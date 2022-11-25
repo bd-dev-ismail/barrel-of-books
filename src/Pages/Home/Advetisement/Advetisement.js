@@ -44,6 +44,7 @@ const Advetisement = () => {
             ))}
           </div>
         )}
+        
         {booking && (
           <BookingModal
             setBooking={setBooking}
