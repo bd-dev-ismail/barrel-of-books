@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ConfrimDelete = ({ title, successAction, closeModal, removeSeller }) => {
+const ConfrimDelete = ({ title, successAction, closeModal, deletingDatal }) => {
   return (
     <div>
       <input type="checkbox" id="confrimDelete" className="modal-toggle" />
@@ -9,7 +9,7 @@ const ConfrimDelete = ({ title, successAction, closeModal, removeSeller }) => {
           <h3 className="font-bold text-lg">{title}</h3>
           <div className="modal-action">
             <label
-              onClick={() => successAction(removeSeller)}
+              onClick={() => successAction(deletingDatal)}
               htmlFor="confrimDelete"
               className="btn btn-sm btn-primary text-white"
             >

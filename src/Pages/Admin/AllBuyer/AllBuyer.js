@@ -1,9 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import Loader from '../../../Shared/Loader/Loader';
+import ConfrimDelete from '../AllSeller/ConfrimDelete';
 
 const AllBuyer = () => {
-     const { data: buyers, isLoading } = useQuery({
+  const [removeBuyer, setRemoveBuyer] = useState(null);
+  const closeModal = () => {
+    return setRemoveBuyer(null);
+  };
+     const { data: buyers, isLoading , refetch} = useQuery({
        queryKey: ["buyer"],
        queryFn: async () => {
          const res = await fetch(`http://localhost:5000/buyer`);
@@ -11,6 +17,18 @@ const AllBuyer = () => {
          return data;
        },
      });
+     const handalDelete = (buyer) => {
+       fetch(`http://localhost:5000/buyer/${buyer?._id}`, {
+         method: "DELETE",
+       })
+         .then((res) => res.json())
+         .then((data) => {
+           if (data.deletedCount > 0) {
+             refetch();
+             toast.warning("Delete Buyer Successfully!");
+           }
+         });
+     };
     return (
       <div>
         <h3 className="text-3xl font-semibold my-5">All buyers</h3>
@@ -52,9 +70,13 @@ const AllBuyer = () => {
                     </td>
                     <td>{buyer?.email}</td>
                     <th>
-                      <button className="btn btn-secondary text-white btn-sm">
-                        Delete Buyer
-                      </button>
+                      <label
+                        onClick={() => setRemoveBuyer(buyer)}
+                        htmlFor="confrimDelete"
+                        className="btn btn-sm btn-error text-white"
+                      >
+                        Delete
+                      </label>
                     </th>
                   </tr>
                 ))}
@@ -62,6 +84,14 @@ const AllBuyer = () => {
             )}
           </table>
         </div>
+        {removeBuyer && (
+          <ConfrimDelete
+            successAction={handalDelete}
+            deletingDatal={removeBuyer}
+            closeModal={closeModal}
+            title="Are You Sure? You Want to Delete?"
+          />
+        )}
       </div>
     );
 };

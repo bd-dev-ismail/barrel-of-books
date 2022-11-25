@@ -89,7 +89,7 @@ const AllSeller = () => {
         {removeSeller && (
         <ConfrimDelete
           successAction={handalDelete}
-          removeSeller={removeSeller}
+          deletingDatal={removeSeller}
           closeModal={closeModal}
           title="Are You Sure? You Want to Delete?"
         />
