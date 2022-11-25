@@ -11,6 +11,7 @@ const Navbar = () => {
       logout()
       .then(()=> {
         navigate('/');
+        localStorage.removeItem("accessToken");
         toast.error("Logout Successfull !!");
       })
       
@@ -33,10 +34,10 @@ const Navbar = () => {
                className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52"
              >
                <li>
-                 <a>Item 1</a>
+                 <Link>Item 1</Link>
                </li>
                <li>
-                 <a>Item 2</a>
+                 <Link>Item 2</Link>
                </li>
              </ul>
            </div>
@@ -72,8 +73,8 @@ const Navbar = () => {
       <div className="bg-primary">
         <div className="px-4 py-5 container mx-auto md:px-24 lg:px-8">
           <div className="relative flex items-center justify-between">
-            <a
-              href="/"
+            <Link
+              to="/"
               aria-label="Company"
               title="Company"
               className="inline-flex items-center"
@@ -82,7 +83,7 @@ const Navbar = () => {
               <span className="ml-2 text-xl font-bold tracking-wide text-white uppercase">
                 Barrel Of Books
               </span>
-            </a>
+            </Link>
             <ul className="flex items-center hidden space-x-8 lg:flex">
               {menuItem}
             </ul>
@@ -113,8 +114,8 @@ const Navbar = () => {
                   <div className="p-5 bg-primary border rounded shadow-sm">
                     <div className="flex items-center justify-between mb-4">
                       <div>
-                        <a
-                          href="/"
+                        <Link
+                          to="/"
                           aria-label="Company"
                           title="Company"
                           className="inline-flex items-center"
@@ -123,7 +124,7 @@ const Navbar = () => {
                           <span className="ml-2 text-xl font-bold tracking-wide text-white uppercase">
                             Barrel Of Books
                           </span>
-                        </a>
+                        </Link>
                       </div>
                       <div>
                         <button

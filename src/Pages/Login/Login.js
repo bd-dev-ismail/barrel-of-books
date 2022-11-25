@@ -3,27 +3,34 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { useToken } from '../../hooks/useToken';
 import Loader from '../../Shared/Loader/Loader';
 const Login = () => {
      const {
        register,
-       handleSubmit,
+  handleSubmit,
        formState: { errors },
      } = useForm();
      const { loginUser, loginWithGoogle } = useContext(AuthContext);
      const [loading, setLoading] = useState(false);
+     const [loginUserEmail, setLoginUserEmail] = useState('');
      const navigate = useNavigate();
      const location = useLocation();
       const from = location.state?.from?.pathname || "/";
+      const [token] = useToken(loginUserEmail);
+      if(token){
+         navigate(from, { replace: true });
+      }
      const handleLogin = (data) => {
       setLoading(true);
        loginUser(data.email, data.password)
          .then((result) => {
            const user = result.user;
            console.log(user);
-           toast.success("Successfully Login !!");
-           navigate(from, { replace: true });
-           setLoading(false);
+            setLoginUserEmail(user?.email);
+             toast.success("Successfully Login !!");
+            
+             setLoading(false);
          })
          .catch((err) => toast.error(err.message));
      };
@@ -32,6 +39,7 @@ const Login = () => {
         loginWithGoogle()
         .then(result => {
           const user = result.user;
+          setLoginUserEmail(user?.email);
           const userInfo = {
             name: user.displayName,
             email: user.email,
@@ -49,6 +57,7 @@ const Login = () => {
               console.log(userdata);
               if (userdata.acknowledged) {
                 setLoading(false);
+                
                 navigate(from, { replace: true });
                 toast.success("Successfully Login With Google!!");
                 console.log(user);

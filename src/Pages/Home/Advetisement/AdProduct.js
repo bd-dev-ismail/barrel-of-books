@@ -13,6 +13,7 @@ const AdProduct = ({ prod, setBooking }) => {
     date,
     sellerName,
     yearOfPurchase,
+    veriyedPd,
   } = prod;
   return (
     <div className="card card-compact w-full lg:w-96 h-[600px] bg-base-100 shadow-xl">
@@ -22,7 +23,8 @@ const AdProduct = ({ prod, setBooking }) => {
       <div className="card-body">
         <h2 className="card-title">{productName}</h2>
         <p className="font-semibold flex items-center">
-          Seller Name: {sellerName} <MdVerified className="text-blue-800" />
+          Seller Name: {sellerName}{" "}
+          {veriyedPd && <MdVerified className="text-blue-800 text-xl" />}
         </p>
         <p>Purchase Year: {yearOfPurchase}</p>
         <div className="flex justify-between">

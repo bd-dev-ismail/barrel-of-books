@@ -20,21 +20,49 @@ const AllSeller = () => {
   const handalDelete = (sellerr) => {
     
     fetch(`http://localhost:5000/seller/${sellerr?._id}`, {
-      method: 'DELETE',
-      
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.deletedCount > 0) {
-        toast.success("Delete Seller Successfully!");
-        refetch();
-      }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          toast.success("Delete Seller Successfully!");
+          refetch();
+        }
+      });
+  };
+  const handelVerify = (sellerr)=> {
+    fetch(`http://localhost:5000/seller/${sellerr?._id}`, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if(data.modifiedCount > 0){
+           toast.success("Verifyed Seller Successfully!");
+           refetch();
+           fetch(`http://localhost:5000/product?email=${sellerr?.email}`, {
+             method: "PUT",
+             headers: {
+               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+             },
+           })
+             .then((res) => res.json())
+             .then((data) => {
+               console.log(data, 'call hoice');
+             });
+        }
+      });
   }
     return (
       <div>
         <h3 className="text-3xl font-semibold my-5">
-          All <span className='text-primary'>Sellers</span>
+          All <span className="text-primary">Sellers</span>
         </h3>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
@@ -44,6 +72,7 @@ const AllSeller = () => {
                 <th>Image</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Remove</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -81,6 +110,23 @@ const AllSeller = () => {
                       >
                         Delete
                       </label>
+                    </th>
+                    <th>
+                      {seller?.verifyed ? (
+                        <button
+                          disabled
+                          className="btn btn-sm btn-primary text-white"
+                        >
+                          Verifyed
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handelVerify(seller)}
+                          className="btn btn-sm btn-primary text-white"
+                        >
+                          Verify
+                        </button>
+                      )}
                     </th>
                   </tr>
                 ))}

@@ -20,7 +20,7 @@ const AddProducts = () => {
     } = useForm({
       defaultValues: {
         sellerEmail: user?.email,
-        sellerName: user?.name,
+        sellerName: user?.displayName,
       },
     });
     
@@ -188,14 +188,11 @@ const AddProducts = () => {
                   <input
                     {...register("sellerName", { required: true })}
                     id="sellerName"
+                    disabled
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
-                  {errors.sellerName && (
-                    <span className="mt-3 text-gray-800">
-                      sellerName field is required
-                    </span>
-                  )}
+                  
                 </div>
                 <div>
                   <label

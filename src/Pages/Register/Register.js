@@ -3,15 +3,23 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { useToken } from '../../hooks/useToken';
 import Loader from '../../Shared/Loader/Loader';
 
 const Register = () => {
    const [role, setRole] = useState('Buyer');
    const {register, handleSubmit, formState: {errors}} = useForm();
    const [loading, setLoading] = useState(false);
+   const [registerEmail, setRegisterEmail] = useState("");
    const navigate = useNavigate();
    const location = useLocation();
    const from = location.state?.from?.pathname || "/";
+   const [token] = useToken(registerEmail);
+   if(token){
+     navigate(from, { replace: true });
+     
+   }
+   
    const { registerUser, updateUserProfile, loginWithGoogle } =
      useContext(AuthContext);
    const handleRegister = (data) => {
@@ -33,6 +41,7 @@ const Register = () => {
         .then(result => {
           const user = result.user;
           console.log(user);
+          setRegisterEmail(user?.email);
           updateUserProfile(data.name, imgData.data.display_url)
             .then(() => {
               console.log("success done done done");
@@ -54,8 +63,7 @@ const Register = () => {
                 console.log(userdata);
                 if (userdata.acknowledged) {
                   setLoading(false);
-                    navigate(from, { replace: true });
-                  toast.success('Registration Successful!');
+                   toast.success("Registration Successful!");
                 }
               });
             })
@@ -71,6 +79,7 @@ const Register = () => {
       loginWithGoogle()
         .then((result) => {
           const user = result.user;
+          setRegisterEmail(user?.email);
           const userInfo = {
             name: user.displayName,
             email: user.email,
