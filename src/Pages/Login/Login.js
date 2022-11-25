@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import Loader from '../../Shared/Loader/Loader';
 const Login = () => {
@@ -13,6 +13,8 @@ const Login = () => {
      const { loginUser, loginWithGoogle } = useContext(AuthContext);
      const [loading, setLoading] = useState(false);
      const navigate = useNavigate();
+     const location = useLocation();
+      const from = location.state?.from?.pathname || "/";
      const handleLogin = (data) => {
       setLoading(true);
        loginUser(data.email, data.password)
@@ -20,6 +22,7 @@ const Login = () => {
            const user = result.user;
            console.log(user);
            toast.success("Successfully Login !!");
+           navigate(from, { replace: true });
            setLoading(false);
          })
          .catch((err) => toast.error(err.message));
@@ -46,7 +49,7 @@ const Login = () => {
               console.log(userdata);
               if (userdata.acknowledged) {
                 setLoading(false);
-                
+                navigate(from, { replace: true });
                 toast.success("Successfully Login With Google!!");
                 console.log(user);
               }

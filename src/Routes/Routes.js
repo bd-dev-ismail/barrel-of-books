@@ -13,6 +13,7 @@ import MyWishList from "../Pages/MyOrders/MyWishList";
 import Register from "../Pages/Register/Register";
 import AddProducts from "../Pages/Seller/AddProducts/AddProducts";
 import MyProducts from "../Pages/Seller/MyProducts/MyProducts";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
         path: "/categoriesById/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:5000/categories/${params.id}`),
-        element: <CategoriesById />,
+        element: (
+          <PrivateRoute>
+            <CategoriesById />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blog",

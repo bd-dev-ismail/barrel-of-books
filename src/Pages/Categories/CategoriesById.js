@@ -9,7 +9,6 @@ import Product from './Product';
 const CategoriesById = () => {
     const category = useLoaderData();
     const [booking, setBooking] = useState(null);
-    
     const { user } = useContext(AuthContext);
     //for category name
     const {data: products = []} = useQuery({

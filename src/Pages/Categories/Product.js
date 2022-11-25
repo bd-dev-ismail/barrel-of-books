@@ -11,24 +11,27 @@ const Product = ({ prod, setBooking }) => {
     location,
     date,
     sellerName,
+
+    yearOfPurchase,
   } = prod;
   return (
-    <div className="card card-compact w-full lg:w-96 h-96 bg-base-100 shadow-xl">
+    <div className="card card-compact w-full lg:w-96 h-[600px] bg-base-100 shadow-xl">
       <figure>
-        <img src={productImage} alt="Shoes" />
+        <img src={productImage} alt="Shoes" className='object-fill'/>
       </figure>
       <div className="card-body">
         <h2 className="card-title">{productName}</h2>
         <p className="font-semibold flex items-center">
-          Seller Name: {sellerName} <MdVerified className='text-blue-800'/>
+          Seller Name: {sellerName} <MdVerified className="text-blue-800" />
         </p>
+        <p>Purchase Year: {yearOfPurchase}</p>
         <div className="flex justify-between">
           <p>Orginial Price: ${originalPrice}</p>
           <p>Resale Price: ${resalePrice} </p>
         </div>
         <div className="flex justify-between ">
           <p>Location: {location}</p>
-          <p>Date: {date}</p>
+          <p>Post Date: {date}</p>
         </div>
         <p>{`${productDesc ? productDesc.slice(0, 100) : undefined}...`}</p>
         <div className="card-actions justify-end">

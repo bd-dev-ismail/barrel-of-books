@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import Loader from '../../Shared/Loader/Loader';
 
@@ -10,6 +10,8 @@ const Register = () => {
    const {register, handleSubmit, formState: {errors}} = useForm();
    const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
+   const location = useLocation();
+   const from = location.state?.from?.pathname || "/";
    const { registerUser, updateUserProfile, loginWithGoogle } =
      useContext(AuthContext);
    const handleRegister = (data) => {
@@ -52,7 +54,7 @@ const Register = () => {
                 console.log(userdata);
                 if (userdata.acknowledged) {
                   setLoading(false);
-                  navigate('/');
+                    navigate(from, { replace: true });
                   toast.success('Registration Successful!');
                 }
               });
@@ -87,7 +89,7 @@ const Register = () => {
               console.log(userdata);
               if (userdata.acknowledged) {
                 
-                navigate("/");
+                  navigate(from, { replace: true });
                 toast.success("Successfully Login With Google!!");
                 console.log(user);
               }
