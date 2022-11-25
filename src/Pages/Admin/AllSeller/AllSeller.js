@@ -26,14 +26,16 @@ const AllSeller = () => {
     .then(res => res.json())
     .then(data => {
       if (data.deletedCount > 0) {
+        toast.success("Delete Seller Successfully!");
         refetch();
-        toast.warning("Delete Seller Successfully!");
       }
     })
   }
     return (
       <div>
-        <h3 className="text-3xl font-semibold my-5">All Sellers</h3>
+        <h3 className="text-3xl font-semibold my-5">
+          All <span className='text-primary'>Sellers</span>
+        </h3>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
@@ -87,12 +89,12 @@ const AllSeller = () => {
           </table>
         </div>
         {removeSeller && (
-        <ConfrimDelete
-          successAction={handalDelete}
-          deletingDatal={removeSeller}
-          closeModal={closeModal}
-          title="Are You Sure? You Want to Delete?"
-        />
+          <ConfrimDelete
+            successAction={handalDelete}
+            deletingDatal={removeSeller}
+            closeModal={closeModal}
+            title="Are You Sure? You Want to Delete?"
+          />
         )}
       </div>
     );

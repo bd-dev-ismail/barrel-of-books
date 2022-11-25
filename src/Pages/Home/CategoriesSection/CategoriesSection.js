@@ -18,7 +18,7 @@ const CategoriesSection = () => {
       <div className="container mx-auto my-24">
         <div className="text-center">
           <h3 className="lg:text-3xl text-xl my-3 uppercase font-bold">
-            All Books Categories
+            All Books <span className="text-primary">Categories</span>
           </h3>
           <p>
             Browse the collection of our best selling and top interresting

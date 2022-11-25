@@ -1,6 +1,7 @@
 import React from 'react';
-import { MdVerified } from "react-icons/md";
-const Product = ({ prod, setBooking }) => {
+import { MdVerified } from 'react-icons/md';
+
+const AdProduct = ({ prod, setBooking }) => {
   const {
     _id,
     productImage,
@@ -16,7 +17,7 @@ const Product = ({ prod, setBooking }) => {
   return (
     <div className="card card-compact w-full lg:w-96 h-[600px] bg-base-100 shadow-xl">
       <figure>
-        <img src={productImage} alt="Shoes" className='object-fill'/>
+        <img src={productImage} alt="Shoes" className="object-fill" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{productName}</h2>
@@ -47,4 +48,4 @@ const Product = ({ prod, setBooking }) => {
   );
 };
 
-export default Product;
+export default AdProduct;

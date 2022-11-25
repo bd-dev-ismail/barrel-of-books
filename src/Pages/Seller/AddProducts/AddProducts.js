@@ -13,7 +13,11 @@ const AddProducts = () => {
     const [loading, setLoading] = useState(false);
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm({
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
       defaultValues: {
         sellerEmail: user?.email,
         sellerName: user?.name,
@@ -109,6 +113,11 @@ const AddProducts = () => {
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
+                  {errors.productName && (
+                    <span className="mt-3 text-gray-800">
+                      productName field is required
+                    </span>
+                  )}
                 </div>
 
                 <div>
@@ -124,6 +133,11 @@ const AddProducts = () => {
                     type="number"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
+                  {errors.originalPrice && (
+                    <span className="mt-3 text-gray-800">
+                      originalPrice field is required
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label
@@ -138,6 +152,11 @@ const AddProducts = () => {
                     type="number"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
+                  {errors.resalePrice && (
+                    <span className="mt-3 text-gray-800">
+                      resalePrice field is required
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label
@@ -153,6 +172,11 @@ const AddProducts = () => {
                     disabled
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
+                  {errors.sellerEmail && (
+                    <span className="mt-3 text-gray-800">
+                      sellerEmail field is required
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label
@@ -165,9 +189,13 @@ const AddProducts = () => {
                     {...register("sellerName", { required: true })}
                     id="sellerName"
                     type="text"
-
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
+                  {errors.sellerName && (
+                    <span className="mt-3 text-gray-800">
+                      sellerName field is required
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label
@@ -189,7 +217,11 @@ const AddProducts = () => {
                     <option value="Other">Other</option>
                   </select>
                 </div>
-
+                {errors.location && (
+                  <span className="mt-3 text-gray-800">
+                    location field is required
+                  </span>
+                )}
                 <div>
                   <label
                     className="text-white dark:text-gray-200"
@@ -205,6 +237,11 @@ const AddProducts = () => {
                     <option value="Good">Good</option>
                     <option value="Fair">Fair</option>
                   </select>
+                  {errors.productConditon && (
+                    <span className="mt-3 text-gray-800">
+                      productConditon field is required
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label
@@ -216,16 +253,18 @@ const AddProducts = () => {
                   {isLoading ? (
                     <Loader />
                   ) : (
-                    <select
-                      {...register("productCategoryId", { required: true })}
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                    >
-                      {categories.map((category) => (
-                        <option key={category._id} value={category?._id}>
-                          {category?.name}
-                        </option>
-                      ))}
-                    </select>
+                    <>
+                      <select
+                        {...register("productCategoryId", { required: true })}
+                        className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                      >
+                        {categories.map((category) => (
+                          <option key={category._id} value={category?._id}>
+                            {category?.name}
+                          </option>
+                        ))}
+                      </select>
+                    </>
                   )}
                 </div>
                 <div>
@@ -245,6 +284,11 @@ const AddProducts = () => {
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
                   </select>
+                  {errors.yearOfPurchase && (
+                    <span className="mt-3 text-gray-800">
+                      yearOfPurchase field is required
+                    </span>
+                  )}
                 </div>
 
                 <div>
@@ -276,6 +320,11 @@ const AddProducts = () => {
                       type="file"
                       className="mt-1 text-white flex justify-center px-4 py-2 w-full border-2 border-gray-300 border-dashed rounded-md"
                     />
+                    {errors.productImage && (
+                      <span className="mt-3 text-gray-800">
+                        productImage field is required
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -289,6 +338,11 @@ const AddProducts = () => {
                   type="textarea"
                   className="block h-36 w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                 ></textarea>
+                {errors.productDesc && (
+                  <span className="mt-3 text-gray-800">
+                    productDesc field is required
+                  </span>
+                )}
               </div>
               <p className="text-center mt-2 text-white font-semibold">
                 Note: Make Sure You Fill-Up Every Filed!

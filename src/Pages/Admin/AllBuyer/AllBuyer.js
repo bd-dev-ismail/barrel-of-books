@@ -24,14 +24,16 @@ const AllBuyer = () => {
          .then((res) => res.json())
          .then((data) => {
            if (data.deletedCount > 0) {
+             toast.success("Delete Buyer Successfully!");
              refetch();
-             toast.warning("Delete Buyer Successfully!");
            }
          });
      };
     return (
       <div>
-        <h3 className="text-3xl font-semibold my-5">All buyers</h3>
+        <h3 className="text-3xl font-semibold my-5">
+          All <span className="text-primary">Buyers</span>
+        </h3>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
             <thead>
