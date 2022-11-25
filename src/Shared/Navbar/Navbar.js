@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import toast from "react-hot-toast";
+import { useQuery } from '@tanstack/react-query';
 const Navbar = () => {
      const [isMenuOpen, setIsMenuOpen] = useState(false);
      const {user, logout} = useContext(AuthContext);
@@ -16,6 +17,15 @@ const Navbar = () => {
       })
       
      }
+     const { data: categories = [] } = useQuery({
+       queryKey: ["categories"],
+       queryFn: async () => {
+         const res = await fetch("http://localhost:5000/categories");
+         const data = await res.json();
+         return data;
+       },
+     });
+     
      const menuItem = (
        <>
          <li className="text-white uppercase font-semibold hover:text-gray-700">
@@ -33,12 +43,13 @@ const Navbar = () => {
                tabIndex={0}
                className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52"
              >
-               <li>
-                 <Link>Item 1</Link>
-               </li>
-               <li>
-                 <Link>Item 2</Link>
-               </li>
+               {categories.map((category) => (
+                 <li key={category._id}>
+                   <Link to={`/categoriesById/${category._id}`}>
+                     {category?.name}
+                   </Link>
+                 </li>
+               ))}
              </ul>
            </div>
            {/* <Link to="/">Categories</Link> */}
