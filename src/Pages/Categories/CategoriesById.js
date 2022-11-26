@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useLoaderData, useNavigate, useNavigation } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import Loader from '../../Shared/Loader/Loader';
 import BookingModal from '../BookingModal/BookingModal';
@@ -10,10 +10,12 @@ const CategoriesById = () => {
     const category = useLoaderData();
     const [booking, setBooking] = useState(null);
     const { user } = useContext(AuthContext);
+     const navigation = useNavigation();
+     
     
     
     //for category name
-    const {data: products = []} = useQuery({
+    const {data: products = [], isLoading: loading} = useQuery({
       queryKey: ["products", category?._id],
       queryFn: async () => {
         const res = await fetch(
@@ -35,6 +37,11 @@ const CategoriesById = () => {
        },
      });
     console.log(products);
+      useEffect(() => {
+    
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+  }, []);
+  
     return (
       <div className="container mx-auto">
         <div className="text-center">
@@ -48,7 +55,10 @@ const CategoriesById = () => {
             well in the world <br /> Happly Learning
           </p>
         </div>
-        {isLoading ? (
+        {
+          navigation.state === "loading" ? <Loader/> : undefined
+        }
+        {isLoading && loading ? (
           <Loader />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10 ">

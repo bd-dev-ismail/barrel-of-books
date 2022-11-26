@@ -37,7 +37,7 @@ const BookingModal = ({ booking, userInfo, setBooking ,}) => {
             setLoading(false);
             setBooking(null);
           toast.success("Order Placed Successfully!");
-          navigate("/dashboard");
+          navigate("/dashboard/my-orders");
         }
       });
   };

@@ -6,6 +6,7 @@ import AllSeller from "../Pages/Admin/AllSeller/AllSeller";
 import ReportItem from "../Pages/Admin/ReportItem/ReportItem";
 import Blog from "../Pages/Blog/Blog";
 import CategoriesById from "../Pages/Categories/CategoriesById";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -15,7 +16,9 @@ import Payment from "../Pages/Payment/Payment";
 import Register from "../Pages/Register/Register";
 import AddProducts from "../Pages/Seller/AddProducts/AddProducts";
 import MyProducts from "../Pages/Seller/MyProducts/MyProducts";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
+import SellerRoute from "./SellerRoute";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +33,11 @@ const router = createBrowserRouter([
       {
         path: "/categoriesById/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`),
+          fetch(`http://localhost:5000/categories/${params.id}`, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }),
         element: (
           <PrivateRoute>
             <CategoriesById />
@@ -62,6 +69,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "/dashboard/my-orders",
         element: <MyOrders />,
       },
 
@@ -71,23 +82,43 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/add-products",
-        element: <AddProducts />,
+        element: (
+          <SellerRoute>
+            <AddProducts />
+          </SellerRoute>
+        ),
       },
       {
         path: "/dashboard/my-products",
-        element: <MyProducts />,
+        element: (
+          <SellerRoute>
+            <MyProducts />
+          </SellerRoute>
+        ),
       },
       {
         path: "/dashboard/all-sellers",
-        element: <AllSeller />,
+        element: (
+          <AdminRoute>
+            <AllSeller />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/all-buyers",
-        element: <AllBuyer />,
+        element: (
+          <AdminRoute>
+            <AllBuyer />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/report-product",
-        element: <ReportItem />,
+        element: (
+          <AdminRoute>
+            <ReportItem />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/payment/:id",

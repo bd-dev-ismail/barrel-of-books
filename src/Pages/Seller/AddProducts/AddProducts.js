@@ -76,25 +76,28 @@ const AddProducts = () => {
                 };
                 console.log(product);
                 fetch(`http://localhost:5000/products`, {
-                  method: 'POST',
+                  method: "POST",
                   headers: {
-                    'content-type': 'application/json'
+                    "content-type": "application/json",
+                    authorization: `Bearer ${localStorage.getItem(
+                      "accessToken"
+                    )}`,
                   },
-                  body: JSON.stringify(product)
+                  body: JSON.stringify(product),
                 })
-                .then(res => res.json())
-                .then(data => {
-                  console.log(data);
-                  if(data.acknowledged){
+                  .then((res) => res.json())
+                  .then((data) => {
+                    console.log(data);
+                    if (data.acknowledged) {
+                      setLoading(false);
+                      toast.success("Product Added Successfully!");
+                      navigate("/dashboard/my-products");
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
                     setLoading(false);
-                    toast.success('Product Added Successfully!');
-                    navigate("/dashboard/my-products");
-                  }
-                })
-                .catch(err=> {
-                  console.log(err);
-                  setLoading(false)
-                })
+                  });
               }
             });
     }

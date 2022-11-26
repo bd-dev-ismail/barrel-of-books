@@ -99,7 +99,7 @@ const CheckoutForm = ({ order }) => {
               `Your Payment Id is: ${paymentIntent.id}`,
               "success"
             );
-            navigate('/dashboard');
+            navigate("/dashboard/my-orders");
           }
         });
     }

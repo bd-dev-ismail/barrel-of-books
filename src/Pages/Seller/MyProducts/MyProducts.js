@@ -13,14 +13,19 @@ const MyProducts = () => {
     return setRemoveProduct(null);
   };
   const {
-    data: myProducts,
+    data: myProducts = [],
     isLoading,
     refetch,
   } = useQuery({
     queryKey: ["myProducts", user?.email, ],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/products?email=${user?.email}`
+        `http://localhost:5000/products?email=${user?.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
       const data = await res.json();
       return data;
@@ -30,6 +35,9 @@ const MyProducts = () => {
   const handalDelete = (buyer) => {
     fetch(`http://localhost:5000/products/${buyer?._id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -43,20 +51,24 @@ const MyProducts = () => {
   const makeAdvertise = (id)=> {
     console.log(id);
     fetch(`http://localhost:5000/adproduct/${id}`, {
-      method: 'PUT'
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-    .then(res => res.json())
-    .then(data => {
-      if(data.modifiedCount > 0){
-        toast.success('Advertise Successfull!');
-        refetch();
-      }
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success("Advertise Successfull!");
+          refetch();
+        }
+      });
   }
     return (
       <div>
         <h3 className="text-3xl text-center font-semibold my-5">
           My <span className="text-primary">Products</span>
+          <p className="my-5">Total Published Products is {myProducts?.length}</p>
         </h3>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
@@ -108,7 +120,6 @@ const MyProducts = () => {
                       <td>
                         <label
                           disabled
-                          
                           className="btn btn-sm btn-secondary text-white"
                         >
                           Delete
