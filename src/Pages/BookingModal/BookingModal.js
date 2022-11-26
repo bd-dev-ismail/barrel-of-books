@@ -2,10 +2,13 @@
 import React, {  useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import Loader from '../../Shared/Loader/Loader';
 
-const BookingModal = ({ booking, userInfo, setBooking }) => {
+const BookingModal = ({ booking, userInfo, setBooking ,}) => {
   const [loading, setLoading] = useState(false);
+  
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm({
     defaultValues: {
       email: userInfo?.email,
@@ -14,6 +17,7 @@ const BookingModal = ({ booking, userInfo, setBooking }) => {
       bookPrice: booking?.resalePrice,
       bookID: booking?._id,
       bookImage: booking?.productImage,
+      sold: false,
     },
   });
   const handleBooking = (data) => {
@@ -33,6 +37,7 @@ const BookingModal = ({ booking, userInfo, setBooking }) => {
             setLoading(false);
             setBooking(null);
           toast.success("Order Placed Successfully!");
+          navigate("/dashboard");
         }
       });
   };

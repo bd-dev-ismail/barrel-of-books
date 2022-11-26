@@ -98,23 +98,38 @@ const MyProducts = () => {
                     <td>{proudct?.productCategoryId}</td>
                     <td>{proudct?.date}</td>
                     <td>${proudct?.resalePrice}</td>
-                    <td className="font-semibold">
-                      {proudct?.status === "sold" ? "Sold" : "Availabe"}
-                    </td>
-                    <td>
-                      <label
-                        onClick={() => setRemoveProduct(proudct)}
-                        htmlFor="confrimDelete"
-                        className="btn btn-sm btn-secondary text-white"
-                      >
-                        Delete
-                      </label>
-                    </td>
+                    {proudct?.sold === true ? (
+                      <td className="font-bold">Sold</td>
+                    ) : (
+                      <td className="font-semibold">Available</td>
+                    )}
+
+                    {proudct?.sold ? (
+                      <td>
+                        <label
+                          disabled
+                          
+                          className="btn btn-sm btn-secondary text-white"
+                        >
+                          Delete
+                        </label>
+                      </td>
+                    ) : (
+                      <td>
+                        <label
+                          onClick={() => setRemoveProduct(proudct)}
+                          htmlFor="confrimDelete"
+                          className="btn btn-sm btn-secondary text-white"
+                        >
+                          Delete
+                        </label>
+                      </td>
+                    )}
                     <th>
                       {/* advertise */}
                       {proudct?.advertise ? (
                         <button
-                         disabled
+                          disabled
                           className="btn btn-primary text-white btn-sm"
                         >
                           Advertised

@@ -36,6 +36,7 @@ const AddProducts = () => {
        
     //add product
     const handelAddProduct = (data)=> {
+      console.log(data)
       setLoading(true);
         const date = format(startDate, 'PP');
         const img = data.productImage[0];
@@ -44,7 +45,9 @@ const AddProducts = () => {
         
         const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_key}`;
         if (data.resalePrice > data.originalPrice){
-          return toast.error('Resale Price Do not increase From Orginial Price');
+          toast.error('Resale Price Do not increase From Orginial Price');
+          setLoading(false);
+           return;
         }
           fetch(url, {
             method: "POST",
@@ -69,6 +72,7 @@ const AddProducts = () => {
                   yearOfPurchase: data.yearOfPurchase,
                   date,
                   status: "unverifyed",
+                  sold: false,
                 };
                 console.log(product);
                 fetch(`http://localhost:5000/products`, {
@@ -86,6 +90,10 @@ const AddProducts = () => {
                     toast.success('Product Added Successfully!');
                     navigate("/dashboard/my-products");
                   }
+                })
+                .catch(err=> {
+                  console.log(err);
+                  setLoading(false)
                 })
               }
             });

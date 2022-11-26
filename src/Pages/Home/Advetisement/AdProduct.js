@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { MdVerified } from 'react-icons/md';
+import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 
 const AdProduct = ({ prod, setBooking }) => {
+  const {user} = useContext(AuthContext);
   const {
     _id,
     productImage,
@@ -15,6 +18,9 @@ const AdProduct = ({ prod, setBooking }) => {
     yearOfPurchase,
     veriyedPd,
   } = prod;
+  const displayToast = ()=> {
+    return toast.error('You need to login!Please Login frist!')
+  }
   return (
     <div className="card card-compact w-full lg:w-96 h-[600px] bg-base-100 shadow-xl">
       <figure>
@@ -37,13 +43,23 @@ const AdProduct = ({ prod, setBooking }) => {
         </div>
         <p>{`${productDesc ? productDesc.slice(0, 100) : undefined}...`}</p>
         <div className="card-actions justify-end">
-          <label
-            onClick={() => setBooking(prod)}
-            htmlFor="booksModal"
-            className="btn btn-primary btn-sm text-white"
-          >
-            Order Now
-          </label>
+          {user?.uid && user?.email ? (
+            <label
+              onClick={() => setBooking(prod)}
+              htmlFor="booksModal"
+              className="btn btn-primary btn-sm text-white"
+            >
+              Order Now
+            </label>
+          ) : (
+            <label
+              onClick={displayToast}
+              htmlFor="booksModal"
+              className="btn btn-primary btn-sm text-white"
+            >
+              Order Now
+            </label>
+          )}
         </div>
       </div>
     </div>

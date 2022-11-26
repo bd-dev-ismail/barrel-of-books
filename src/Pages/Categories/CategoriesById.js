@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import Loader from '../../Shared/Loader/Loader';
 import BookingModal from '../BookingModal/BookingModal';
@@ -10,6 +10,8 @@ const CategoriesById = () => {
     const category = useLoaderData();
     const [booking, setBooking] = useState(null);
     const { user } = useContext(AuthContext);
+    
+    
     //for category name
     const {data: products = []} = useQuery({
       queryKey: ["products", category?._id],
@@ -64,6 +66,7 @@ const CategoriesById = () => {
             setBooking={setBooking}
             userInfo={userInfo}
             booking={booking}
+            
           />
         )}
       </div>
