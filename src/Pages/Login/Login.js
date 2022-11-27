@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -78,6 +79,9 @@ const Login = () => {
      
     return (
       <div>
+        <Helmet>
+          <title>Login -Barrel Of Books</title>
+        </Helmet>
         <div className="container mx-auto mt-20">
           <div className="flex justify-center h-full items-center">
             <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

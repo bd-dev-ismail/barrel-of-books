@@ -18,29 +18,33 @@ const Advetisement = () => {
     //     return data;
     //   },
     // });
+    console.log(products)
+     const { data: userInfo, refetch } = useQuery({
+       queryKey: ["userInfo", user?.email],
+       queryFn: async () => {
+         const res = await fetch(
+           `http://localhost:5000/user?email=${user?.email}`
+         );
+         const data = await res.json();
+         return data;
+       },
+     });
     useEffect(()=> {
       setLoading(true)
       axios.get("http://localhost:5000/adproduct").then(function (data) {
         // handle success
+       
         setProducts(data.data);
         setLoading(false);
+        refetch();
       });
-    },[])
-      const { data: userInfo } = useQuery({
-        queryKey: ["userInfo", user?.email],
-        queryFn: async () => {
-          const res = await fetch(
-            `http://localhost:5000/user?email=${user?.email}`
-          );
-          const data = await res.json();
-          return data;
-        },
-      });
+    },[refetch])
+     
     return (
       <>
         {products?.length && (
           <div className="container mx-auto my-24">
-            <h3 className="lg:text-3xl text-xl my-3 uppercase font-bold">
+            <h3 className="lg:text-3xl text-xl my-3 text-center lg:text-start uppercase font-bold">
               Advertise <span className="text-primary">Products</span>
             </h3>
             {loading ? (
@@ -62,6 +66,7 @@ const Advetisement = () => {
                 setBooking={setBooking}
                 userInfo={userInfo}
                 booking={booking}
+                refetch={refetch}
               />
             )}
           </div>

@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -109,6 +110,9 @@ const CheckoutForm = ({ order }) => {
 
   return (
     <>
+      <Helmet>
+        <title>Checkout -Barrel Of Books</title>
+      </Helmet>
       <form onSubmit={handleSubmit}>
         <CardElement
           options={{

@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
+import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
-import app from '../../../Firebase/firebase.config';
+
 import Loader from '../../../Shared/Loader/Loader';
 import ConfrimDelete from '../../Admin/AllSeller/ConfrimDelete';
 
@@ -66,9 +67,14 @@ const MyProducts = () => {
   }
     return (
       <div>
+        <Helmet>
+          <title>My Products -Barrel Of Books</title>
+        </Helmet>
         <h3 className="text-3xl text-center font-semibold my-5">
           My <span className="text-primary">Products</span>
-          <p className="my-5">Total Published Products is {myProducts?.length}</p>
+          <p className="my-5">
+            Total Published Products is {myProducts?.length}
+          </p>
         </h3>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">

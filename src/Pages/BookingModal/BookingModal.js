@@ -5,9 +5,9 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../../Shared/Loader/Loader';
 
-const BookingModal = ({ booking, userInfo, setBooking ,}) => {
+const BookingModal = ({ booking, userInfo, setBooking, refetch }) => {
   const [loading, setLoading] = useState(false);
-  
+ 
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -21,8 +21,8 @@ const BookingModal = ({ booking, userInfo, setBooking ,}) => {
     },
   });
   const handleBooking = (data) => {
-    console.log(data);
-   setLoading(true);
+    
+    setLoading(true);
     fetch("http://localhost:5000/orders", {
       method: "POST",
       headers: {
@@ -34,19 +34,25 @@ const BookingModal = ({ booking, userInfo, setBooking ,}) => {
       .then((data) => {
         console.log(data);
         if (data.acknowledged) {
-            setLoading(false);
-            setBooking(null);
+          setLoading(false);
+          setBooking(null);
           toast.success("Order Placed Successfully!");
           navigate("/dashboard/my-orders");
         }
       });
   };
+  const closeModal =()=> {
+    // refetch();
+    setBooking(null);
+  };
+  refetch();
   return (
     <div>
       <input type="checkbox" id="booksModal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box relative">
           <label
+          onClick={closeModal}
             htmlFor="booksModal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >

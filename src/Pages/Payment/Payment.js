@@ -1,6 +1,7 @@
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useLoaderData, useNavigation } from 'react-router-dom';
 import Loader from '../../Shared/Loader/Loader';
 import CheckoutForm from './CheckoutForm';
@@ -9,11 +10,14 @@ console.log(stripePromise);
 const Payment = () => {
     const order = useLoaderData();
     const navigation = useNavigation();
-    if(navigation.state === 'loading'){
-      return <Loader/>
+    if (navigation.state === "loading" || navigation.state === "submitting") {
+      return <Loader />;
     }
     return (
-      <div className='flex justify-center items-center my-20'>
+      <div className="flex justify-center items-center my-20">
+        <Helmet>
+          <title>Payment -Barrel Of Books</title>
+        </Helmet>
         <div className="w-full lg:w-[30rem] shadow-2xl">
           <h3 className="text-3xl font-semibold my-5 text-center">
             Procced Too <span className="text-primary"> Payment</span>

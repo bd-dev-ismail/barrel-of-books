@@ -19,11 +19,15 @@ const AdProduct = ({ prod, setBooking }) => {
     yearOfPurchase,
     veriyedPd,
   } = prod;
+
   const displayToast = ()=> {
-    return toast.error('You need to login!Please Login frist!')
+    if (user?.email && prod?.sellerEmail){
+       return toast.error("Your Can not Buy Your Product");
+    }
+      return toast.error("You need to login!Please Login frist!");
   }
     const handelReport = (productDetails) => {
-      const report = { productDetails, reportUser: user?.email, report: true };
+      const report = { productDetails, reportUser: user?.email, report: true , productId: _id};
       const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
           confirmButton: "btn btn-success",
@@ -106,6 +110,7 @@ const AdProduct = ({ prod, setBooking }) => {
         </div>
         <p>{`${productDesc ? productDesc.slice(0, 100) : undefined}...`}</p>
         <div className="card-actions justify-end">
+           {/* && ( user?.email !== prod?.sellerEmail ) */}
           {user?.uid && user?.email ? (
             <label
               onClick={() => setBooking(prod)}
@@ -117,12 +122,21 @@ const AdProduct = ({ prod, setBooking }) => {
           ) : (
             <label
               onClick={displayToast}
-              htmlFor="booksModal"
+              
               className="btn btn-primary btn-sm text-white"
             >
               Order Now
             </label>
           )}
+          {/* {
+           ?  <label
+              onClick={sellerBuyHandle}
+              
+              className="btn btn-primary btn-sm text-white"
+            >
+              Order Now
+            </label> : undefined
+          } */}
         </div>
       </div>
     </div>

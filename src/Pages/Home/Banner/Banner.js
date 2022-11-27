@@ -62,7 +62,7 @@ const Banner = () => {
               <div className=" absolute flex justify-start transform -translate-y-1/2 left-30 top-1/2 text-white">
                 <div className="max-w-md px-5 lg:px-0">
                   <h1 className="mb-5 lg:text-5xl text-2xl font-bold capitalize">
-                    You are a book lover? collections is only for you.
+                    Are You a book lover? collections is only for you.
                   </h1>
                   <p className="text-gray-200 mb-3">
                     Despite the enormous quantity of books, how few people read!

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Swal from 'sweetalert2';
 import Loader from '../../../Shared/Loader/Loader';
 
@@ -21,7 +22,7 @@ const ReportItem = () => {
        },
      });
      const handleReportRemove = (report) => {
-       
+       refetch();
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
             confirmButton: "btn btn-success",
@@ -42,6 +43,7 @@ const ReportItem = () => {
           })
           .then((result) => {
             if (result.isConfirmed) {
+              refetch();
               fetch(
                 `http://localhost:5000/products/${report?.productDetails?._id}`,
                 {
@@ -57,6 +59,7 @@ const ReportItem = () => {
                 .then((data) => {
                   console.log(data);
                   if (data.acknowledged) {
+                    refetch();
                     fetch(`http://localhost:5000/reports/${report?._id}`, {
                       method: "DELETE",
                       headers: {
@@ -92,6 +95,9 @@ const ReportItem = () => {
      }
     return (
       <div>
+        <Helmet>
+          <title>Reported Products -Barrel Of Books</title>
+        </Helmet>
         <h3 className="text-3xl text-center font-semibold my-5">
           All <span className="text-primary">Reported Products</span>
         </h3>
@@ -110,35 +116,38 @@ const ReportItem = () => {
               <Loader />
             ) : (
               <tbody>
-                {reports?.map((report, idx) =>
-                    <tr key={report?._id}>
-                      <th>
-                        <label>{idx + 1}</label>
-                      </th>
-                      <td>
-                        <div className="flex items-center space-x-3">
-                          <div className="avatar">
-                            <div className="mask mask-squircle w-12 h-12">
-                              <img
-                                src={report?.productDetails?.productImage}
-                                alt="Avatar Tailwind CSS Component"
-                              />
-                            </div>
+                {reports?.map((report, idx) => (
+                  <tr key={report?._id}>
+                    <th>
+                      <label>{idx + 1}</label>
+                    </th>
+                    <td>
+                      <div className="flex items-center space-x-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle w-12 h-12">
+                            <img
+                              src={report?.productDetails?.productImage}
+                              alt="Avatar Tailwind CSS Component"
+                            />
                           </div>
                         </div>
-                      </td>
-                      <td>
-                        {" "}
-                        <p>{report?.productDetails?.productName}</p>
-                      </td>
-                      <td>{report?.reportUser}</td>
-                      <th>
-                        <button onClick={()=> handleReportRemove(report)} className="btn btn-sm btn-error text-white">Remove</button>
-                      </th>
-
-                    </tr>
-                  
-                )}
+                      </div>
+                    </td>
+                    <td>
+                      {" "}
+                      <p>{report?.productDetails?.productName}</p>
+                    </td>
+                    <td>{report?.reportUser}</td>
+                    <th>
+                      <button
+                        onClick={() => handleReportRemove(report)}
+                        className="btn btn-sm btn-error text-white"
+                      >
+                        Remove
+                      </button>
+                    </th>
+                  </tr>
+                ))}
               </tbody>
             )}
           </table>

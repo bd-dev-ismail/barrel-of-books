@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
 import Loader from '../../Shared/Loader/Loader';
@@ -23,6 +24,9 @@ const MyOrders = () => {
   })
     return (
       <div>
+         <Helmet>
+                <title>My Orders -Barrel Of Books</title>
+            </Helmet>
         <h3 className="text-3xl text-center font-semibold my-5">
           My <span className="text-primary">Orders</span>
           <p className='my-5'>Your Total order is {orders?.length}</p>

@@ -20,7 +20,12 @@ const Product = ({ prod, setBooking }) => {
     veriyedPd,
   } = prod;
   const handelReport = (productDetails)=> {
-    const report = {productDetails, reportUser: user?.email, report: true}
+    const report = {
+      productDetails,
+      reportUser: user?.email,
+      report: true,
+      productId: _id,
+    };
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",
@@ -86,7 +91,7 @@ const Product = ({ prod, setBooking }) => {
             {veriyedPd && <MdVerified className="text-blue-800 text-xl" />}
           </p>
           <button
-            onClick={() => handelReport(prod)}
+            onClick={()=> handelReport(prod)}
             className="btn btn-sm btn-secondary justify-end text-white"
           >
             Report
@@ -105,7 +110,7 @@ const Product = ({ prod, setBooking }) => {
         <p>{`${productDesc ? productDesc.slice(0, 100) : undefined}...`}</p>
         <div className="card-actions justify-end">
           <label
-            onClick={() => setBooking(prod)}
+            onClick={()=> setBooking(prod)}
             htmlFor="booksModal"
             className="btn btn-primary btn-sm text-white"
           >

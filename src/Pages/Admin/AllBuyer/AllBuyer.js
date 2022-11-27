@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
 import Loader from '../../../Shared/Loader/Loader';
 import ConfrimDelete from '../AllSeller/ConfrimDelete';
@@ -38,6 +39,9 @@ const AllBuyer = () => {
      };
     return (
       <div>
+        <Helmet>
+          <title>All Buyers -Barrel Of Books</title>
+        </Helmet>
         <h3 className="text-3xl text-center font-semibold my-5">
           All <span className="text-primary">Buyers</span>
         </h3>

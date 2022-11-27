@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext,  useState } from 'react';
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import { FaCalendarAlt } from 'react-icons/fa';
@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 const AddProducts = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [loading, setLoading] = useState(false);
@@ -49,6 +50,11 @@ const AddProducts = () => {
           setLoading(false);
            return;
         }
+        if(data.yearOfPurchase > data.yearOfUse){
+          toast.error("Year of Use Do not increase From Year of Use");
+          setLoading(false);
+          return;
+        }
           fetch(url, {
             method: "POST",
             body: formData,
@@ -70,6 +76,7 @@ const AddProducts = () => {
                   sellerEmail: data.sellerEmail,
                   sellerName: data.sellerName,
                   yearOfPurchase: data.yearOfPurchase,
+                  yearOfUse: data.yearOfUse,
                   date,
                   status: "unverifyed",
                   sold: false,
@@ -96,14 +103,21 @@ const AddProducts = () => {
                   })
                   .catch((err) => {
                     console.log(err);
+                    toast.error(err.message)
                     setLoading(false);
                   });
               }
-            });
+            }).catch(error => {
+              toast.error(error.message);
+              setLoading(false);
+            })
     }
   
     return (
       <div>
+        <Helmet>
+          <title>Add Products -Barrel Of Books</title>
+        </Helmet>
         <div>
           <section className="max-w-4xl p-6 mx-auto bg-primary rounded-md shadow-md dark:bg-gray-800 mt-5">
             <h1 className="text-xl font-bold text-white capitalize dark:text-white">
@@ -203,7 +217,6 @@ const AddProducts = () => {
                     type="text"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   />
-                  
                 </div>
                 <div>
                   <label
@@ -295,6 +308,29 @@ const AddProducts = () => {
                   {errors.yearOfPurchase && (
                     <span className="mt-3 text-gray-800">
                       yearOfPurchase field is required
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <label
+                    className="text-white dark:text-gray-200"
+                    htmlFor="yearOfPurchase"
+                  >
+                    Year Of Use
+                  </label>
+                  <select
+                    {...register("yearOfUse", { required: true })}
+                    className="block w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                  >
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                  </select>
+                  {errors.yearOfUse && (
+                    <span className="mt-3 text-gray-800">
+                      yearOfUse field is required
                     </span>
                   )}
                 </div>
