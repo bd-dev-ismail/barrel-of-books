@@ -139,7 +139,7 @@ const BookingModal = ({ booking, userInfo, setBooking ,}) => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Your Location</span>
+                <span className="label-text">Meeting Location</span>
               </label>
               <select
                 {...register("location", { required: true })}

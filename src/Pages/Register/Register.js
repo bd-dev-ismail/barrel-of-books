@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -15,6 +15,9 @@ const Register = () => {
    const location = useLocation();
    const from = location.state?.from?.pathname || "/";
    const [token] = useToken(registerEmail);
+    useEffect(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }, []);
    if(token){
      navigate(from, { replace: true });
      

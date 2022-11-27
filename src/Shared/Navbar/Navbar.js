@@ -54,21 +54,24 @@ const Navbar = () => {
            </div>
            {/* <Link to="/">Categories</Link> */}
          </li>
-         <li className="text-white uppercase font-semibold hover:text-gray-700">
-           <Link to="/dashboard">Dashboard</Link>
-         </li>
+
          <li className="text-white uppercase font-semibold hover:text-gray-700">
            <Link to="/blog">Blog</Link>
          </li>
          {user?.uid ? (
-           <li>
-             <button
-               onClick={handelLogOut}
-               className=" py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border"
-             >
-               Logout
-             </button>
-           </li>
+           <>
+             <li className="text-white uppercase font-semibold hover:text-gray-700">
+               <Link to="/dashboard">Dashboard</Link>
+             </li>
+             <li>
+               <button
+                 onClick={handelLogOut}
+                 className=" py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border"
+               >
+                 Logout
+               </button>
+             </li>
+           </>
          ) : (
            <li>
              <Link to="/login">

@@ -74,6 +74,7 @@ const AdProduct = ({ prod, setBooking }) => {
           }
         });
     };
+    //verify user if he seller he coud'nt buy her porudct
   return (
     <div className="card card-compact w-full lg:w-96 h-[600px] bg-base-100 shadow-xl">
       <figure>

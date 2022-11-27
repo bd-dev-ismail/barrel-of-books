@@ -11,7 +11,11 @@ const ReportItem = () => {
      } = useQuery({
        queryKey: ["reports"],
        queryFn: async () => {
-         const res = await fetch(`http://localhost:5000/reports`);
+         const res = await fetch(`http://localhost:5000/reports`, {
+           headers: {
+             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+           },
+         });
          const data = await res.json();
          return data;
        },
@@ -42,6 +46,11 @@ const ReportItem = () => {
                 `http://localhost:5000/products/${report?.productDetails?._id}`,
                 {
                   method: "DELETE",
+                  headers: {
+                    authorization: `Bearer ${localStorage.getItem(
+                      "accessToken"
+                    )}`,
+                  },
                 }
               )
                 .then((res) => res.json())
@@ -50,6 +59,11 @@ const ReportItem = () => {
                   if (data.acknowledged) {
                     fetch(`http://localhost:5000/reports/${report?._id}`, {
                       method: "DELETE",
+                      headers: {
+                        authorization: `Bearer ${localStorage.getItem(
+                          "accessToken"
+                        )}`,
+                      },
                     })
                       .then((res) => res.json())
                       .then((data) => {
@@ -62,7 +76,6 @@ const ReportItem = () => {
                           );
                         }
                       });
-                   
                   }
                 });
             } else if (

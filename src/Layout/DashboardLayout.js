@@ -11,9 +11,11 @@ const DashboardLayout = () => {
   const [isSeller] = useSeller(user?.email);
   const item = (
     <>
-      <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
-        <Link to="/dashboard/my-orders">My Orders</Link>
-      </li>
+      {!isAdmin && (
+        <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
+          <Link to="/dashboard/my-orders">My Orders</Link>
+        </li>
+      )}
       {/* <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
         <Link to="/dashboard/wish-list">My Wishlist</Link>
       </li> */}
