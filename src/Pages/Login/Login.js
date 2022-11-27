@@ -25,6 +25,7 @@ const Login = () => {
        }, []);
       if(token){
          navigate(from, { replace: true });
+          setLoading(false);
       }
      const handleLogin = (data) => {
       setLoading(true);
@@ -35,7 +36,7 @@ const Login = () => {
             setLoginUserEmail(user?.email);
              toast.success("Successfully Login !!");
             
-             setLoading(false);
+            
          })
          .catch((err) => {
           toast.error(err.message);

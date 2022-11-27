@@ -111,7 +111,7 @@ const CheckoutForm = ({ order }) => {
   return (
     <>
       <Helmet>
-        <title>Checkout -Barrel Of Books</title>
+        <title>Proceed Payment -Barrel Of Books</title>
       </Helmet>
       <form onSubmit={handleSubmit}>
         <CardElement

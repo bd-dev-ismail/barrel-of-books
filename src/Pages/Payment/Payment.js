@@ -15,9 +15,7 @@ const Payment = () => {
     }
     return (
       <div className="flex justify-center items-center my-20">
-        <Helmet>
-          <title>Payment -Barrel Of Books</title>
-        </Helmet>
+      
         <div className="w-full lg:w-[30rem] shadow-2xl">
           <h3 className="text-3xl font-semibold my-5 text-center">
             Procced Too <span className="text-primary"> Payment</span>

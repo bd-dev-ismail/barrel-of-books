@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 import { MdVerified } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import { useAdmin } from '../../../hooks/useAdmin';
+import Loader from '../../../Shared/Loader/Loader';
 
 const AdProduct = ({ prod, setBooking }) => {
   const {user} = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const {
     _id,
     productImage,
@@ -19,11 +22,26 @@ const AdProduct = ({ prod, setBooking }) => {
     yearOfPurchase,
     veriyedPd,
   } = prod;
-
+  
   const displayToast = ()=> {
+    setLoading(true);
+     fetch(`http://localhost:5000/admin?email=${user?.email}`)
+       .then((res) => res.json())
+       .then((data) => {
+         if (data.role === "Admin") {
+           console.log(data);
+           setLoading(false);
+           return toast.error(
+             "You are in Admin Mode! Please Login as a buyer or seller Account!"
+           );
+          
+         }
+       });
+    
     if (user?.email && prod?.sellerEmail){
        return toast.error("Your Can not Buy Your Product");
     }
+    
       return toast.error("You need to login!Please Login frist!");
   }
     const handelReport = (productDetails) => {
@@ -111,6 +129,7 @@ const AdProduct = ({ prod, setBooking }) => {
         <p>{`${productDesc ? productDesc.slice(0, 100) : undefined}...`}</p>
         <div className="card-actions justify-end">
            {/* && ( user?.email !== prod?.sellerEmail ) */}
+           {loading && <Loader></Loader>}
           {user?.uid && user?.email ? (
             <label
               onClick={() => setBooking(prod)}
