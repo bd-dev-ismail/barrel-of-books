@@ -12,15 +12,15 @@ Those website make for resale Books's with the ability to advertise a book.A ful
 ### Live Site 
 
 ------------
-Hosted In Firebase -> [Barrel Of Books](http://something "Barrel Of Books")
+Hosted In Firebase -> [Barrel Of Books](https://barrel-of-books.web.app/ "Barrel Of Books")
 
 ------------
 ### Admin Access
 
 ------------
 
-adminEmail:  **ismail@gmail.com**
-adminPassword:  **123456**
+- AdminEmail:  **ismail@gmail.com**
+- AdminPassword:  **123456**
 
 
 ### Features
