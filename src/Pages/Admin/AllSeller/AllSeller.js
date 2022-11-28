@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 import Loader from '../../../Shared/Loader/Loader';
 import ConfrimDelete from './ConfrimDelete';
 
 const AllSeller = () => {
+  const {user} = useContext(AuthContext);
   const [removeSeller, setRemoveSeller] = useState(null);
   const closeModal = () => {
     return  setRemoveSeller(null);
@@ -33,8 +35,21 @@ const AllSeller = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount > 0) {
-          toast.success("Delete Seller Successfully!");
           refetch();
+          fetch(
+            `https://barrel-of-books-server.vercel.app/myproudct?email=${user?.email}`,
+            {
+              method: "DELETE",
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          ).then(res => res.json())
+          .then(data => {
+            console.log('inside product remove', data)
+              toast.success("Delete Seller Successfully!");
+              refetch();
+          })
         }
       });
   };
@@ -60,6 +75,7 @@ const AllSeller = () => {
              .then((res) => res.json())
              .then((data) => {
                console.log(data, 'call hoice');
+               refetch();
              });
         }
       });
