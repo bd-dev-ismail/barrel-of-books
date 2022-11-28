@@ -20,7 +20,7 @@ const CategoriesById = () => {
       queryKey: ["products", category?._id],
       queryFn: async () => {
         const res = await fetch(
-          `http://localhost:5000/products/${category?._id}`
+          `https://barrel-of-books-server.vercel.app/products/${category?._id}`
         );
         const data = await res.json();
         return data;
@@ -31,7 +31,7 @@ const CategoriesById = () => {
        queryKey: ["userInfo", user?.email],
        queryFn: async () => {
          const res = await fetch(
-           `http://localhost:5000/user?email=${user?.email}`
+           `https://barrel-of-books-server.vercel.app/user?email=${user?.email}`
          );
          const data = await res.json();
          return data;

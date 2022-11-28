@@ -13,7 +13,7 @@ const AllSeller = () => {
   const { data: sellers, isLoading, refetch } = useQuery({
     queryKey: ["seller"],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/seller`, {
+      const res = await fetch(`https://barrel-of-books-server.vercel.app/seller`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -24,7 +24,7 @@ const AllSeller = () => {
   });
   const handalDelete = (sellerr) => {
     
-    fetch(`http://localhost:5000/seller/${sellerr?._id}`, {
+    fetch(`https://barrel-of-books-server.vercel.app/seller/${sellerr?._id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -39,7 +39,7 @@ const AllSeller = () => {
       });
   };
   const handelVerify = (sellerr)=> {
-    fetch(`http://localhost:5000/seller/${sellerr?._id}`, {
+    fetch(`https://barrel-of-books-server.vercel.app/seller/${sellerr?._id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -51,7 +51,7 @@ const AllSeller = () => {
         if(data.modifiedCount > 0){
            toast.success("Verifyed Seller Successfully!");
            refetch();
-           fetch(`http://localhost:5000/product?email=${sellerr?.email}`, {
+           fetch(`https://barrel-of-books-server.vercel.app/product?email=${sellerr?.email}`, {
              method: "PUT",
              headers: {
                authorization: `Bearer ${localStorage.getItem("accessToken")}`,

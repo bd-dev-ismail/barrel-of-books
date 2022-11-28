@@ -13,7 +13,7 @@ const Advetisement = () => {
     // const { data: products = [] , isLoading} = useQuery({
     //   queryKey: ["products"],
     //   queryFn: async () => {
-    //     const res = await fetch(`http://localhost:5000/adproduct`);
+    //     const res = await fetch(`https://barrel-of-books-server.vercel.app/adproduct`);
     //     const data = await res.json();
     //     return data;
     //   },
@@ -23,7 +23,7 @@ const Advetisement = () => {
        queryKey: ["userInfo", user?.email],
        queryFn: async () => {
          const res = await fetch(
-           `http://localhost:5000/user?email=${user?.email}`
+           `https://barrel-of-books-server.vercel.app/user?email=${user?.email}`
          );
          const data = await res.json();
          return data;
@@ -31,7 +31,7 @@ const Advetisement = () => {
      });
     useEffect(()=> {
       setLoading(true)
-      axios.get("http://localhost:5000/adproduct").then(function (data) {
+      axios.get("https://barrel-of-books-server.vercel.app/adproduct").then(function (data) {
         // handle success
        
         setProducts(data.data);

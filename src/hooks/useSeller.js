@@ -5,7 +5,7 @@ export const useSeller = (email) => {
   const [isSellerLoading, setIsSellerLoading] = useState(true);
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:5000/sellerrole?email=${email}`)
+      fetch(`https://barrel-of-books-server.vercel.app/sellerrole?email=${email}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);

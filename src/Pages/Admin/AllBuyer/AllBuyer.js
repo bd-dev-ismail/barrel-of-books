@@ -13,7 +13,7 @@ const AllBuyer = () => {
      const { data: buyers, isLoading , refetch} = useQuery({
        queryKey: ["buyer"],
        queryFn: async () => {
-         const res = await fetch(`http://localhost:5000/buyer`, {
+         const res = await fetch(`https://barrel-of-books-server.vercel.app/buyer`, {
            headers: {
              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
            },
@@ -23,7 +23,7 @@ const AllBuyer = () => {
        },
      });
      const handalDelete = (buyer) => {
-       fetch(`http://localhost:5000/buyer/${buyer?._id}`, {
+       fetch(`https://barrel-of-books-server.vercel.app/buyer/${buyer?._id}`, {
          method: "DELETE",
          headers: {
            authorization: `Bearer ${localStorage.getItem("accessToken")}`,

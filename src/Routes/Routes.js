@@ -33,11 +33,14 @@ const router = createBrowserRouter([
       {
         path: "/categoriesById/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`, {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }),
+          fetch(
+            `https://barrel-of-books-server.vercel.app/categories/${params.id}`,
+            {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          ),
         element: (
           <PrivateRoute>
             <CategoriesById />
@@ -124,7 +127,15 @@ const router = createBrowserRouter([
         path: "/dashboard/payment/:id",
         element: <Payment />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/orders/${params.id}`),
+          fetch(
+            `https://barrel-of-books-server.vercel.app/orders/${params.id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          ),
       },
     ],
   },

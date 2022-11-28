@@ -12,7 +12,7 @@ const ReportItem = () => {
      } = useQuery({
        queryKey: ["reports"],
        queryFn: async () => {
-         const res = await fetch(`http://localhost:5000/reports`, {
+         const res = await fetch(`https://barrel-of-books-server.vercel.app/reports`, {
            headers: {
              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
            },
@@ -45,7 +45,7 @@ const ReportItem = () => {
             if (result.isConfirmed) {
               refetch();
               fetch(
-                `http://localhost:5000/products/${report?.productDetails?._id}`,
+                `https://barrel-of-books-server.vercel.app/products/${report?.productDetails?._id}`,
                 {
                   method: "DELETE",
                   headers: {
@@ -60,7 +60,7 @@ const ReportItem = () => {
                   console.log(data);
                   if (data.acknowledged) {
                     refetch();
-                    fetch(`http://localhost:5000/reports/${report?._id}`, {
+                    fetch(`https://barrel-of-books-server.vercel.app/reports/${report?._id}`, {
                       method: "DELETE",
                       headers: {
                         authorization: `Bearer ${localStorage.getItem(

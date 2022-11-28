@@ -5,7 +5,7 @@ export const useAdmin = (email) => {
         const [isAdminLoading, setIsAdminLoading] = useState(true);
         useEffect(() => {
           if (email) {
-            fetch(`http://localhost:5000/admin?email=${email}`)
+            fetch(`https://barrel-of-books-server.vercel.app/admin?email=${email}`)
               .then((res) => res.json())
               .then((data) => {
                 if(data.role === 'Admin'){

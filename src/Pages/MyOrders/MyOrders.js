@@ -11,7 +11,7 @@ const MyOrders = () => {
     queryKey: ['orders', user?.email],
     queryFn: async()=> {
       const res = await fetch(
-        `http://localhost:5000/orders?email=${user?.email}`,
+        `https://barrel-of-books-server.vercel.app/orders?email=${user?.email}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,

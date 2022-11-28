@@ -28,7 +28,7 @@ const BookingModal = ({ booking, userInfo, setBooking, refetch }) => {
      return toast.error("You can not buy your product");
    }
     setLoading(true);
-    fetch("http://localhost:5000/orders", {
+    fetch("https://barrel-of-books-server.vercel.app/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",
