@@ -54,7 +54,8 @@ const Login = () => {
             email: user.email,
             image: user.photoURL,
             role: 'Buyer',
-          };fetch("http://localhost:5000/users", {
+          };
+          fetch("http://localhost:5000/users", {
             method: "POST",
             headers: {
               "content-type": "application/json",

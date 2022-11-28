@@ -1,7 +1,6 @@
-import { async } from "@firebase/util";
-import { useQuery } from "@tanstack/react-query";
+
 import React, { useContext } from "react";
-import { Link, Outlet, useRouteError } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider/AuthProvider";
 import { useAdmin } from "../hooks/useAdmin";
 import { useSeller } from "../hooks/useSeller";
@@ -10,22 +9,14 @@ import Navbar from "../Shared/Navbar/Navbar";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
-  const [isAdmin] = useAdmin(user?.email);
-  const [isSeller] = useSeller(user?.email);
-  // const {data: userr} = useQuery({
-  //   queryKey: ['user'],
-  //   queryFn: async()=> {
-  //     const res = await fetch(`http://localhost:5000/user?email=${user?.email}`);
-  //     const data = await res.json();
-  //     return data;
-  //   }
-  // })
-  // if(userr.role === 'Seller'){
-  //  isSellerLoading(true);
-  // }
-  // if(userr.role === 'Admin'){
-  //   isAdminLoading(true);
-  // }
+  const [isAdmin, isAdminLoading] = useAdmin(user?.email);
+  const [isSeller, isSellerLoading] = useSeller(user?.email);
+  if(isAdmin && isAdminLoading){
+    return <Loader/>
+  }
+  if(isSeller && isSellerLoading){
+    return <Loader/>
+  }
   const item = (
     <>
       {!isAdmin && (

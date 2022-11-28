@@ -28,7 +28,7 @@ const CategoriesSection = () => {
         {isLoading ? (
           <Loader />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 mt-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4 lg:gap-4 mt-10">
             {categories?.map((category) => (
               <SingleCategory
                 category={category}

@@ -24,23 +24,9 @@ const AdProduct = ({ prod, setBooking }) => {
   } = prod;
   
   const displayToast = ()=> {
-    setLoading(true);
-     fetch(`http://localhost:5000/admin?email=${user?.email}`)
-       .then((res) => res.json())
-       .then((data) => {
-         if (data.role === "Admin") {
-           console.log(data);
-           setLoading(false);
-           return toast.error(
-             "You are in Admin Mode! Please Login as a buyer or seller Account!"
-           );
-          
-         }
-       });
-    
-    if (user?.email && prod?.sellerEmail){
-       return toast.error("Your Can not Buy Your Product");
-    }
+    // if (user?.email && prod?.sellerEmail){
+    //    return toast.error("Your Can not Buy Your Product");
+    // }
     
       return toast.error("You need to login!Please Login frist!");
   }

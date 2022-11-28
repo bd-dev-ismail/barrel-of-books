@@ -10,7 +10,7 @@ const SingleCategory = ({category}) => {
     return (
       <div
         onClick={() => handalNavigate(_id)}
-        className="card w-96  mb-5 bg-base-100 shadow-xl cursor-pointer image-full relative"
+        className="card lg:w-96 w-full mb-5 bg-base-100 shadow-xl cursor-pointer image-full relative"
       >
         <figure>
           <img src={image} alt="Shoes" />
