@@ -1,19 +1,32 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 import Loader from '../../../Shared/Loader/Loader';
 import SingleCategory from './SingleCategory';
 
 const CategoriesSection = () => {
-    const {data: categories = [], isLoading} = useQuery({
-        queryKey: ['categories'],
-        queryFn: async()=> {
-            const res = await fetch("https://barrel-of-books-server.vercel.app/categories");
-            const data = await res.json();
-            return data;
-        }
-    })
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+    // const {data: categories = [], isLoading} = useQuery({
+    //     queryKey: ['categories'],
+    //     queryFn: async()=> {
+    //         const res = await fetch("https://barrel-of-books-server.vercel.app/categories");
+    //         const data = await res.json();
+    //         return data;
+    //     }
+    // })
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("https://barrel-of-books-server.vercel.app/categories")
+      .then(function (data) {
+        // handle success
 
+        setCategories(data.data);
+        setLoading(false);
+      });
+  }, []);
     return (
       <div className="container mx-auto my-24">
         <div className="text-center">
@@ -25,7 +38,7 @@ const CategoriesSection = () => {
             products. <br /> ll definitely find what you are looking for..
           </p>
         </div>
-        {isLoading ? (
+        {loading ? (
           <Loader />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-4 lg:gap-4 mt-10">

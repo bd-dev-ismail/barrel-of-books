@@ -144,7 +144,7 @@ const MyProducts = () => {
                     )}
                     <th>
                       {/* advertise */}
-                      {proudct?.advertise ? (
+                      {proudct?.advertise || proudct?.sold ? (
                         <button
                           disabled
                           className="btn btn-primary text-white btn-sm"

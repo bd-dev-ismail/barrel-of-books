@@ -8,16 +8,17 @@ import axios from 'axios';
 const Advetisement = () => {
     const [booking, setBooking] = useState(null);
     const { user } = useContext(AuthContext);
-    const [products ,setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    // const { data: products = [] , isLoading} = useQuery({
-    //   queryKey: ["products"],
-    //   queryFn: async () => {
-    //     const res = await fetch(`https://barrel-of-books-server.vercel.app/adproduct`);
-    //     const data = await res.json();
-    //     return data;
-    //   },
-    // });
+    // const [products ,setProducts] = useState([]);
+    // const [loading, setLoading] = useState(true);
+    const { data: products = [] , isLoading, refetch: refresh} = useQuery({
+      queryKey: ["products"],
+      queryFn: async () => {
+        const res = await fetch(`https://barrel-of-books-server.vercel.app/adproduct`);
+        const data = await res.json();
+
+        return data;
+      },
+    });
     console.log(products)
      const { data: userInfo, refetch } = useQuery({
        queryKey: ["userInfo", user?.email],
@@ -29,17 +30,18 @@ const Advetisement = () => {
          return data;
        },
      });
-    useEffect(()=> {
-      setLoading(true)
-      axios.get("https://barrel-of-books-server.vercel.app/adproduct").then(function (data) {
-        // handle success
+    // useEffect(()=> {
+    //   setLoading(true)
+    //   axios.get("https://barrel-of-books-server.vercel.app/adproduct").then(function (data) {
+    //     // handle success
        
-        setProducts(data.data);
-        setLoading(false);
-        refetch();
-      });
-    },[refetch])
-     
+    //     setProducts(data.data);
+    //     setLoading(false);
+    //     refetch();
+    //   });
+    // },[refetch])
+     refetch();
+     refresh();
     return (
       <>
         {products?.length && (
@@ -47,12 +49,14 @@ const Advetisement = () => {
             <h3 className="lg:text-3xl text-xl my-3 text-center lg:text-start uppercase font-bold">
               Advertise <span className="text-primary">Products</span>
             </h3>
-            {loading ? (
+            {isLoading ? (
               <Loader />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-10 ">
                 {products.map((prod) => (
                   <AdProduct
+                  refetch={refetch}
+                  refresh={refresh}
                     setBooking={setBooking}
                     key={prod._id}
                     prod={prod}

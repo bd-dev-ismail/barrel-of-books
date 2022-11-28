@@ -6,8 +6,8 @@ import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 import { useAdmin } from '../../../hooks/useAdmin';
 import Loader from '../../../Shared/Loader/Loader';
 
-const AdProduct = ({ prod, setBooking }) => {
-  const {user} = useContext(AuthContext);
+const AdProduct = ({ prod, setBooking, refetch , refresh}) => {
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const {
     _id,
@@ -22,67 +22,74 @@ const AdProduct = ({ prod, setBooking }) => {
     yearOfPurchase,
     veriyedPd,
   } = prod;
-  
-  const displayToast = ()=> {
+
+  const displayToast = () => {
     // if (user?.email && prod?.sellerEmail){
     //    return toast.error("Your Can not Buy Your Product");
     // }
-    
-      return toast.error("You need to login!Please Login frist!");
-  }
-    const handelReport = (productDetails) => {
-      const report = { productDetails, reportUser: user?.email, report: true , productId: _id};
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger",
-        },
-        buttonsStyling: false,
-      });
 
-      swalWithBootstrapButtons
-        .fire({
-          title: "Are you sure?",
-          text: `You are reporting on Product Name ${productName}`,
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes, Report it!",
-          cancelButtonText: "No, cancel!",
-          reverseButtons: true,
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            fetch("https://barrel-of-books-server.vercel.app/reports", {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              },
-              body: JSON.stringify(report),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                if (data.acknowledged) {
-                  swalWithBootstrapButtons.fire(
-                    "Reported!",
-                    ` ${productName} been reported.`,
-                    "success"
-                  );
-                }
-              });
-          } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-          ) {
-            swalWithBootstrapButtons.fire(
-              "Cancelled",
-              `You are not reporting ${productName} :)`,
-              "error"
-            );
-          }
-        });
+    return toast.error("You need to login!Please Login frist!");
+  };
+  const handelReport = (productDetails) => {
+    const report = {
+      productDetails,
+      reportUser: user?.email,
+      report: true,
+      productId: _id,
     };
-    //verify user if he seller he coud'nt buy her porudct
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: `You are reporting on Product Name ${productName}`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Report it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          fetch("https://barrel-of-books-server.vercel.app/reports", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(report),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.acknowledged) {
+                refetch();
+                refresh();
+                swalWithBootstrapButtons.fire(
+                  "Reported!",
+                  ` ${productName} been reported.`,
+                  "success"
+                );
+              }
+            });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            "Cancelled",
+            `You are not reporting ${productName} :)`,
+            "error"
+          );
+        }
+      });
+  };
+  //verify user if he seller he coud'nt buy her porudct
   return (
     <div className="card card-compact w-full lg:w-96 h-[600px] bg-base-100 shadow-xl">
       <figure>
@@ -103,7 +110,10 @@ const AdProduct = ({ prod, setBooking }) => {
           </button>
         </div>
 
-        <p>Purchase Year: {yearOfPurchase}</p>
+        <div>
+          {" "}
+          <p>Purchase Year: {yearOfPurchase}</p>
+        </div>
         <div className="flex justify-between">
           <p>Orginial Price: ${originalPrice}</p>
           <p>Resale Price: ${resalePrice} </p>
@@ -114,8 +124,8 @@ const AdProduct = ({ prod, setBooking }) => {
         </div>
         <p>{`${productDesc ? productDesc.slice(0, 100) : undefined}...`}</p>
         <div className="card-actions justify-end">
-           {/* && ( user?.email !== prod?.sellerEmail ) */}
-           {loading && <Loader></Loader>}
+          {/* && ( user?.email !== prod?.sellerEmail ) */}
+          {loading && <Loader></Loader>}
           {user?.uid && user?.email ? (
             <label
               onClick={() => setBooking(prod)}
@@ -127,7 +137,6 @@ const AdProduct = ({ prod, setBooking }) => {
           ) : (
             <label
               onClick={displayToast}
-              
               className="btn btn-primary btn-sm text-white"
             >
               Order Now
