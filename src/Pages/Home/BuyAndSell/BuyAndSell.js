@@ -3,7 +3,7 @@ import books from '../../../assets/books.jpg';
 const BuyAndSell = () => {
     return (
       <div>
-        <div className="relative px-4 pt-8 container mx-auto mb-10 lg:pb-32 md:px-8 xl:px-20">
+        <div className="relative px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 ">
           <div className="max-w-xl lg:max-w-screen-xl">
             <div className="mb-16 lg:max-w-lg lg:mb-0">
               <div className="max-w-xl mb-6">

@@ -4,6 +4,8 @@ import Advetisement from '../Advetisement/Advetisement';
 import Banner from '../Banner/Banner';
 import BuyAndSell from '../BuyAndSell/BuyAndSell';
 import CategoriesSection from '../CategoriesSection/CategoriesSection';
+import History from '../History/History';
+import ProductCount from './ProductCount/ProductCount';
 
 const Home = () => {
     return (
@@ -15,6 +17,8 @@ const Home = () => {
            <Advetisement/>
            <CategoriesSection/>
            <BuyAndSell/>
+           <ProductCount/>
+           <History/>
         </div>
     );
 };

@@ -4,8 +4,12 @@ import { MdVerified } from "react-icons/md";
 import Swal from 'sweetalert2';
 import './sweetalert.css';
 import { AuthContext } from '../../context/AuthProvider/AuthProvider';
+import { useSeller } from '../../hooks/useSeller';
+import { useAdmin } from '../../hooks/useAdmin';
 const Product = ({ prod, setBooking }) => {
   const {user} = useContext(AuthContext);
+  const [isSeller] = useSeller(user?.email);
+  const [isAdmin] = useAdmin(user?.email);
   const {
     _id,
     productImage,
@@ -18,8 +22,11 @@ const Product = ({ prod, setBooking }) => {
     sellerName,
     yearOfPurchase,
     veriyedPd,
+
+    yearOfUse,
   } = prod;
   const handelReport = (productDetails)=> {
+   
     const report = {
       productDetails,
       reportUser: user?.email,
@@ -90,15 +97,20 @@ const Product = ({ prod, setBooking }) => {
             Seller Name: {sellerName}{" "}
             {veriyedPd && <MdVerified className="text-blue-800 text-xl" />}
           </p>
-          <button
-            onClick={()=> handelReport(prod)}
-            className="btn btn-sm btn-secondary justify-end text-white"
-          >
-            Report
-          </button>
+          {!isSeller && !isAdmin && (
+            <button
+              onClick={() => handelReport(prod)}
+              className="btn btn-sm btn-secondary justify-end text-white"
+            >
+              Report
+            </button>
+          )}
         </div>
 
-        <p>Purchase Year: {yearOfPurchase}</p>
+        <div className='flex justify-between'>
+          <p>Purchase Year: {yearOfPurchase}</p>
+          <p>Year Of Uses: {yearOfUse ? yearOfUse : 'No Data'}</p>
+        </div>
         <div className="flex justify-between">
           <p>Orginial Price: ${originalPrice}</p>
           <p>Resale Price: ${resalePrice} </p>
@@ -110,7 +122,7 @@ const Product = ({ prod, setBooking }) => {
         <p>{`${productDesc ? productDesc.slice(0, 100) : undefined}...`}</p>
         <div className="card-actions justify-end">
           <label
-            onClick={()=> setBooking(prod)}
+            onClick={() => setBooking(prod)}
             htmlFor="booksModal"
             className="btn btn-primary btn-sm text-white"
           >

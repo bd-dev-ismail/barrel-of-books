@@ -40,6 +40,7 @@ const DashboardLayout = () => {
           </li>
         </>
       ) : undefined}
+      
       {isAdmin && (
         <>
           <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
@@ -52,7 +53,7 @@ const DashboardLayout = () => {
             <Link to="/dashboard/report-product">Reported Products</Link>
           </li>
         </>
-      )}
+      ) }
     </>
   );
   return (

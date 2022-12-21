@@ -4,11 +4,14 @@ import { MdVerified } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 import { useAdmin } from '../../../hooks/useAdmin';
+import { useSeller } from '../../../hooks/useSeller';
 import Loader from '../../../Shared/Loader/Loader';
 
 const AdProduct = ({ prod, setBooking, refetch , refresh}) => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [isSeller] = useSeller(user?.email);
+  const [isAdmin] = useAdmin(user?.email);
   const {
     _id,
     productImage,
@@ -21,6 +24,7 @@ const AdProduct = ({ prod, setBooking, refetch , refresh}) => {
     sellerName,
     yearOfPurchase,
     veriyedPd,
+    yearOfUse,
   } = prod;
 
   const displayToast = () => {
@@ -31,6 +35,9 @@ const AdProduct = ({ prod, setBooking, refetch , refresh}) => {
     return toast.error("You need to login!Please Login frist!");
   };
   const handelReport = (productDetails) => {
+    if(!user){
+      return toast.error("Please Login As a buyer!")
+    }
     const report = {
       productDetails,
       reportUser: user?.email,
@@ -102,18 +109,20 @@ const AdProduct = ({ prod, setBooking, refetch , refresh}) => {
             Seller Name: {sellerName}{" "}
             {veriyedPd && <MdVerified className="text-blue-800 text-xl" />}
           </p>
-          <button
-            onClick={() => handelReport(prod)}
-            className="btn btn-sm btn-secondary justify-end text-white"
-          >
-            Report
-          </button>
+          {!isAdmin && !isSeller && (
+            <button
+              onClick={() => handelReport(prod)}
+              className="btn btn-sm btn-secondary justify-end text-white"
+            >
+              Report
+            </button>
+          )}
         </div>
-
-        <div>
-          {" "}
+        <div className="flex justify-between">
           <p>Purchase Year: {yearOfPurchase}</p>
+          <p>Year Of Uses: {yearOfUse ? yearOfUse : 'No Data'}</p>
         </div>
+        
         <div className="flex justify-between">
           <p>Orginial Price: ${originalPrice}</p>
           <p>Resale Price: ${resalePrice} </p>
