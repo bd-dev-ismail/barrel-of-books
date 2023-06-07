@@ -398,7 +398,7 @@ const AddProducts = () => {
                   <input
                     type="submit"
                     value="Publish Product"
-                    className="btn btn-outline text-white"
+                    className="btn dropShadow btn-outline text-white"
                   />
                 )}
               </div>

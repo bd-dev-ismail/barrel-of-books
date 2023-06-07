@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider/AuthProvider";
@@ -11,49 +10,48 @@ const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
   const [isAdmin, isAdminLoading] = useAdmin(user?.email);
   const [isSeller, isSellerLoading] = useSeller(user?.email);
-  if(isAdmin && isAdminLoading){
-    return <Loader/>
+  if (isAdmin && isAdminLoading) {
+    return <Loader />;
   }
-  if(isSeller && isSellerLoading){
-    return <Loader/>
+  if (isSeller && isSellerLoading) {
+    return <Loader />;
   }
   const item = (
     <>
       {!isAdmin && (
-        <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
+        <li className="hover:bg-primary dropShadow border mx-3 border-green-600 hover:text-white uppercase font-semibold">
           <Link to="/dashboard/my-orders">My Orders</Link>
         </li>
       )}
       {/* <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
         <Link to="/dashboard/wish-list">My Wishlist</Link>
       </li> */}
-      
+
       {isSeller ? (
         <>
           {" "}
-          
-          <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
+          <li className="hover:bg-primary dropShadow border mx-3 border-green-600 hover:text-white uppercase font-semibold">
             <Link to="/dashboard/add-products">Add Products</Link>
           </li>
-          <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
+          <li className="hover:bg-primary dropShadow border mx-3 border-green-600 hover:text-white uppercase font-semibold">
             <Link to="/dashboard/my-products">My Products</Link>
           </li>
         </>
       ) : undefined}
-      
+
       {isAdmin && (
         <>
-          <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
+          <li className="hover:bg-primary dropShadow border mx-3 border-green-600 hover:text-white uppercase font-semibold">
             <Link to="/dashboard/all-sellers">All Seller</Link>
           </li>
-          <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
+          <li className="hover:bg-primary dropShadow border mx-3 border-green-600 hover:text-white uppercase font-semibold">
             <Link to="/dashboard/all-buyers">All Buyers</Link>
           </li>
-          <li className="hover:bg-primary border mx-3 border-green-600 hover:text-white uppercase font-semibold">
+          <li className="hover:bg-primary dropShadow border mx-3 border-green-600 hover:text-white uppercase font-semibold">
             <Link to="/dashboard/report-product">Reported Products</Link>
           </li>
         </>
-      ) }
+      )}
     </>
   );
   return (

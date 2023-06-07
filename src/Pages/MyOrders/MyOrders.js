@@ -24,12 +24,12 @@ const MyOrders = () => {
   })
     return (
       <div>
-         <Helmet>
-                <title>My Orders -Barrel Of Books</title>
-            </Helmet>
+        <Helmet>
+          <title>My Orders -Barrel Of Books</title>
+        </Helmet>
         <h3 className="text-3xl text-center font-semibold my-5">
           My <span className="text-primary">Orders</span>
-          <p className='my-5'>Your Total order is {orders?.length}</p>
+          <p className="my-5">Your Total order is {orders?.length}</p>
         </h3>
         <div className="overflow-x-auto w-full">
           <table className="table w-full">
@@ -70,14 +70,17 @@ const MyOrders = () => {
                     <td>{order?.location}</td>
                     <th>
                       {order?.sold ? (
-                        <Link >
-                          <button disabled className="btn btn-primary text-white btn-sm">
+                        <Link>
+                          <button
+                            disabled
+                            className="btn btn-primary text-white btn-sm"
+                          >
                             paid
                           </button>
                         </Link>
                       ) : (
                         <Link to={`/dashboard/payment/${order?._id}`}>
-                          <button className="btn btn-primary text-white btn-sm">
+                          <button className="btn dropShadow btn-primary text-white btn-sm">
                             pay
                           </button>
                         </Link>

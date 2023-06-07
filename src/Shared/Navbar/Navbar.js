@@ -66,7 +66,7 @@ const Navbar = () => {
              <li>
                <button
                  onClick={handelLogOut}
-                 className=" py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border"
+                 className="dropShadow py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border"
                >
                  Logout
                </button>
@@ -75,7 +75,7 @@ const Navbar = () => {
          ) : (
            <li>
              <Link to="/login">
-               <button className=" py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
+               <button className="dropShadow py-[6px] px-[14px] font-semibold cursor-pointer hover:bg-gray-700 hover:border-gray-700 uppercase text-white border">
                  Login
                </button>
              </Link>

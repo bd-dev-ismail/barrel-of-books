@@ -65,7 +65,10 @@ const CategoriesById = () => {
         {isLoading || loading ? (
           <Loader />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4 my-10 ">
+          <div
+            data-aos="fade-up"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4 my-10 "
+          >
             {products.map((prod) => (
               <Product
                 setBooking={setBooking}

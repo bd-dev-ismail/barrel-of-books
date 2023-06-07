@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
-import toast from 'react-hot-toast';
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { MdVerified } from "react-icons/md";
-import Swal from 'sweetalert2';
-import './sweetalert.css';
-import { AuthContext } from '../../context/AuthProvider/AuthProvider';
-import { useSeller } from '../../hooks/useSeller';
-import { useAdmin } from '../../hooks/useAdmin';
+import Swal from "sweetalert2";
+import "./sweetalert.css";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+import { useSeller } from "../../hooks/useSeller";
+import { useAdmin } from "../../hooks/useAdmin";
 const Product = ({ prod, setBooking }) => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isSeller] = useSeller(user?.email);
   const [isAdmin] = useAdmin(user?.email);
   const {
@@ -25,8 +25,7 @@ const Product = ({ prod, setBooking }) => {
 
     yearOfUse,
   } = prod;
-  const handelReport = (productDetails)=> {
-   
+  const handelReport = (productDetails) => {
     const report = {
       productDetails,
       reportUser: user?.email,
@@ -53,25 +52,24 @@ const Product = ({ prod, setBooking }) => {
       })
       .then((result) => {
         if (result.isConfirmed) {
-           fetch("https://barrel-of-books-server.vercel.app/reports", {
-             method: "POST",
-             headers: {
-               "content-type": "application/json",
-               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-             },
-             body: JSON.stringify(report),
-           })
-             .then((res) => res.json())
-             .then((data) => {
-               if (data.acknowledged) {
+          fetch("https://barrel-of-books-server.vercel.app/reports", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(report),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.acknowledged) {
                 swalWithBootstrapButtons.fire(
                   "Reported!",
                   ` ${productName} been reported.`,
                   "success"
                 );
-               }
-             });
-          
+              }
+            });
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
@@ -83,37 +81,44 @@ const Product = ({ prod, setBooking }) => {
           );
         }
       });
- 
-  }
+  };
   return (
     <div className="card card-compact w-full lg:w-96 h-[600px] bg-base-100 shadow-xl">
       <figure>
-        <img src={productImage} alt="Shoes" className="object-fill" />
+        <img
+          src={productImage}
+          alt="Shoes"
+          className="object-fill w-full h-[320px]"
+        />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{productName}</h2>
         <div className="flex ">
           <p className="font-semibold flex items-center">
             Seller Name: {sellerName}{" "}
-            {veriyedPd && <MdVerified className="text-blue-800 text-xl" />}
+            {veriyedPd ? (
+              <MdVerified className="text-blue-800 text-xl" />
+            ) : undefined}
           </p>
           {!isSeller && !isAdmin && (
             <button
               onClick={() => handelReport(prod)}
-              className="btn btn-sm btn-secondary justify-end text-white"
+              className="btn dropShadow btn-sm btn-secondary justify-end text-white"
             >
               Report
             </button>
           )}
         </div>
 
-        <div className='flex justify-between'>
+        <div className="flex justify-between ">
           <p>Purchase Year: {yearOfPurchase}</p>
-          <p>Year Of Uses: {yearOfUse ? yearOfUse : 'No Data'}</p>
+          <p>Year Of Uses: {yearOfUse ? yearOfUse : "No Data"}</p>
         </div>
-        <div className="flex justify-between">
-          <p>Orginial Price: ${originalPrice}</p>
-          <p>Resale Price: ${resalePrice} </p>
+        <div className="flex justify-between font-bold">
+          <p className="text-xl">
+            Price: <span className="line-through mr-2">${originalPrice}</span>
+            {""}${resalePrice}{" "}
+          </p>
         </div>
         <div className="flex justify-between ">
           <p>Location: {location}</p>
@@ -124,7 +129,7 @@ const Product = ({ prod, setBooking }) => {
           <label
             onClick={() => setBooking(prod)}
             htmlFor="booksModal"
-            className="btn btn-primary btn-sm text-white"
+            className="btn dropShadow btn-primary btn-sm text-white"
           >
             Order Now
           </label>

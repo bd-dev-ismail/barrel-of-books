@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useState } from 'react';
-import { Helmet } from 'react-helmet';
-import toast from 'react-hot-toast';
-import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useState } from "react";
+import { Helmet } from "react-helmet";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../../context/AuthProvider/AuthProvider";
 
-import Loader from '../../../Shared/Loader/Loader';
-import ConfrimDelete from '../../Admin/AllSeller/ConfrimDelete';
+import Loader from "../../../Shared/Loader/Loader";
+import ConfrimDelete from "../../Admin/AllSeller/ConfrimDelete";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
@@ -18,7 +18,7 @@ const MyProducts = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["myProducts", user?.email, ],
+    queryKey: ["myProducts", user?.email],
     queryFn: async () => {
       const res = await fetch(
         `https://barrel-of-books-server.vercel.app/products?email=${user?.email}`,
@@ -49,7 +49,7 @@ const MyProducts = () => {
       });
   };
   //update product
-  const makeAdvertise = (id)=> {
+  const makeAdvertise = (id) => {
     console.log(id);
     fetch(`https://barrel-of-books-server.vercel.app/adproduct/${id}`, {
       method: "PUT",
@@ -64,118 +64,116 @@ const MyProducts = () => {
           refetch();
         }
       });
-  }
-    return (
-      <div>
-        <Helmet>
-          <title>My Products -Barrel Of Books</title>
-        </Helmet>
-        <h3 className="text-3xl text-center font-semibold my-5">
-          My <span className="text-primary">Products</span>
-          <p className="my-5">
-            Total Published Products is {myProducts?.length}
-          </p>
-        </h3>
-        <div className="overflow-x-auto w-full">
-          <table className="table w-full">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Category ID</th>
-                <th>Publish Date</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Remove</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            {isLoading ? (
-              <Loader />
-            ) : (
-              <tbody>
-                {myProducts?.map((proudct, idx) => (
-                  <tr key={proudct?._id}>
-                    <th>
-                      <label>{idx + 1}</label>
-                    </th>
-                    <td>
-                      <div className="flex items-center space-x-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
-                            <img
-                              src={proudct?.productImage}
-                              alt="Avatar Tailwind CSS Component"
-                            />
-                          </div>
+  };
+  return (
+    <div>
+      <Helmet>
+        <title>My Products -Barrel Of Books</title>
+      </Helmet>
+      <h3 className="text-3xl text-center font-semibold my-5">
+        My <span className="text-primary">Products</span>
+        <p className="my-5">Total Published Products is {myProducts?.length}</p>
+      </h3>
+      <div className="overflow-x-auto w-full">
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Category ID</th>
+              <th>Publish Date</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Remove</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <tbody>
+              {myProducts?.map((proudct, idx) => (
+                <tr key={proudct?._id}>
+                  <th>
+                    <label>{idx + 1}</label>
+                  </th>
+                  <td>
+                    <div className="flex items-center space-x-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <img
+                            src={proudct?.productImage}
+                            alt="Avatar Tailwind CSS Component"
+                          />
                         </div>
-
-                        <div className="font-bold">{proudct?.productName}</div>
                       </div>
-                    </td>
-                    <td>{proudct?.productCategoryId}</td>
-                    <td>{proudct?.date}</td>
-                    <td>${proudct?.resalePrice}</td>
-                    {proudct?.sold === true ? (
-                      <td className="font-bold">Sold</td>
-                    ) : (
-                      <td className="font-semibold">Available</td>
-                    )}
 
-                    {proudct?.sold ? (
-                      <td>
-                        <label
-                          disabled
-                          className="btn btn-sm btn-secondary text-white"
-                        >
-                          Delete
-                        </label>
-                      </td>
+                      <div className="font-bold">{proudct?.productName}</div>
+                    </div>
+                  </td>
+                  <td>{proudct?.productCategoryId}</td>
+                  <td>{proudct?.date}</td>
+                  <td>${proudct?.resalePrice}</td>
+                  {proudct?.sold === true ? (
+                    <td className="font-bold">Sold</td>
+                  ) : (
+                    <td className="font-semibold">Available</td>
+                  )}
+
+                  {proudct?.sold ? (
+                    <td>
+                      <label
+                        disabled
+                        className="btn btn-sm btn-secondary text-white"
+                      >
+                        Delete
+                      </label>
+                    </td>
+                  ) : (
+                    <td>
+                      <label
+                        onClick={() => setRemoveProduct(proudct)}
+                        htmlFor="confrimDelete"
+                        className="btn dropShadow btn-sm btn-secondary text-white"
+                      >
+                        Delete
+                      </label>
+                    </td>
+                  )}
+                  <th>
+                    {/* advertise */}
+                    {proudct?.advertise || proudct?.sold ? (
+                      <button
+                        disabled
+                        className="btn btn-primary text-white btn-sm"
+                      >
+                        Advertised
+                      </button>
                     ) : (
-                      <td>
-                        <label
-                          onClick={() => setRemoveProduct(proudct)}
-                          htmlFor="confrimDelete"
-                          className="btn btn-sm btn-secondary text-white"
-                        >
-                          Delete
-                        </label>
-                      </td>
+                      <button
+                        onClick={() => makeAdvertise(proudct?._id)}
+                        className="btn dropShadow btn-primary text-white btn-sm"
+                      >
+                        Advertise
+                      </button>
                     )}
-                    <th>
-                      {/* advertise */}
-                      {proudct?.advertise || proudct?.sold ? (
-                        <button
-                          disabled
-                          className="btn btn-primary text-white btn-sm"
-                        >
-                          Advertised
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => makeAdvertise(proudct?._id)}
-                          className="btn btn-primary text-white btn-sm"
-                        >
-                          Advertise
-                        </button>
-                      )}
-                    </th>
-                  </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
-        </div>
-        {removeProduct && (
-          <ConfrimDelete
-            successAction={handalDelete}
-            deletingDatal={removeProduct}
-            closeModal={closeModal}
-            title="Are You Sure? You Want to Delete?"
-          />
-        )}
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </table>
       </div>
-    );
+      {removeProduct && (
+        <ConfrimDelete
+          successAction={handalDelete}
+          deletingDatal={removeProduct}
+          closeModal={closeModal}
+          title="Are You Sure? You Want to Delete?"
+        />
+      )}
+    </div>
+  );
 };
 
 export default MyProducts;

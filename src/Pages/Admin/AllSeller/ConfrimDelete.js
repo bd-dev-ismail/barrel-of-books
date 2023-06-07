@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const ConfrimDelete = ({ title, successAction, closeModal, deletingDatal }) => {
   return (
@@ -11,13 +11,13 @@ const ConfrimDelete = ({ title, successAction, closeModal, deletingDatal }) => {
             <label
               onClick={() => successAction(deletingDatal)}
               htmlFor="confrimDelete"
-              className="btn btn-sm btn-primary text-white"
+              className="btn dropShadow btn-sm btn-primary text-white"
             >
               Confirm Delete
             </label>
             <button
               onClick={closeModal}
-              className="btn btn-sm btn-warning text-white"
+              className="btn dropShadow btn-sm btn-warning text-white"
             >
               Cancel
             </button>

@@ -86,7 +86,7 @@ const AllBuyer = () => {
                       <label
                         onClick={() => setRemoveBuyer(buyer)}
                         htmlFor="confrimDelete"
-                        className="btn btn-sm btn-error text-white"
+                        className="btn dropShadow btn-sm btn-error text-white"
                       >
                         Delete
                       </label>

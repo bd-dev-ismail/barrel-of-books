@@ -14,3 +14,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.dropShadow:hover {
+  box-shadow: 5px 5px 0px black;
+}
+.hero-heading {
+  text-shadow: 5px 5px black;
+}
+.newsCard:hover{
+  box-shadow: 5px 5px 0px black;
+}

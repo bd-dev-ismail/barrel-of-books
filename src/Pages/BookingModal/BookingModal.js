@@ -57,7 +57,7 @@ const BookingModal = ({ booking, userInfo, setBooking, refetch }) => {
       <div className="modal">
         <div className="modal-box relative">
           <label
-          onClick={closeModal}
+            onClick={closeModal}
             htmlFor="booksModal"
             className="btn btn-sm btn-circle absolute right-2 top-2"
           >
@@ -166,7 +166,10 @@ const BookingModal = ({ booking, userInfo, setBooking, refetch }) => {
               </select>
             </div>
             <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary text-white">
+              <button
+                type="submit"
+                className="btn dropShadow btn-primary text-white"
+              >
                 {loading ? <Loader /> : "Confrim Order"}
               </button>
             </div>
