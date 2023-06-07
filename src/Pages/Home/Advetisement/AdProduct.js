@@ -65,7 +65,7 @@ const AdProduct = ({ prod, setBooking, refetch, refresh }) => {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          fetch("https://barrel-of-books-server.vercel.app/reports", {
+          fetch("http://localhost:5000/reports", {
             method: "POST",
             headers: {
               "content-type": "application/json",

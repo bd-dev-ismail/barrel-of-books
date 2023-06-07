@@ -12,14 +12,11 @@ const ReportItem = () => {
   } = useQuery({
     queryKey: ["reports"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://barrel-of-books-server.vercel.app/reports`,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
+      const res = await fetch(`http://localhost:5000/reports`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -48,7 +45,7 @@ const ReportItem = () => {
         if (result.isConfirmed) {
           refetch();
           fetch(
-            `https://barrel-of-books-server.vercel.app/products/${report?.productDetails?._id}`,
+            `http://localhost:5000/products/${report?.productDetails?._id}`,
             {
               method: "DELETE",
               headers: {
@@ -61,17 +58,14 @@ const ReportItem = () => {
               console.log(data);
               if (data.acknowledged) {
                 refetch();
-                fetch(
-                  `https://barrel-of-books-server.vercel.app/reports/${report?._id}`,
-                  {
-                    method: "DELETE",
-                    headers: {
-                      authorization: `Bearer ${localStorage.getItem(
-                        "accessToken"
-                      )}`,
-                    },
-                  }
-                )
+                fetch(`http://localhost:5000/reports/${report?._id}`, {
+                  method: "DELETE",
+                  headers: {
+                    authorization: `Bearer ${localStorage.getItem(
+                      "accessToken"
+                    )}`,
+                  },
+                })
                   .then((res) => res.json())
                   .then((data) => {
                     if (data.deletedCount > 0) {

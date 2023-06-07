@@ -19,7 +19,7 @@ const CheckoutForm = ({ order }) => {
   useEffect(() => {
     setLoading(true);
     // Create PaymentIntent as soon as the page loads
-    fetch("https://barrel-of-books-server.vercel.app/create-payment-intent", {
+    fetch("http://localhost:5000/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const CheckoutForm = ({ order }) => {
     }
     if (paymentIntent.status === "succeeded") {
       //store data
-    
+
       const payment = {
         bookPrice,
         transitionId: paymentIntent.id,
@@ -81,7 +81,7 @@ const CheckoutForm = ({ order }) => {
         productId: bookID,
         orderId: _id,
       };
-      fetch("https://barrel-of-books-server.vercel.app/payments", {
+      fetch("http://localhost:5000/payments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

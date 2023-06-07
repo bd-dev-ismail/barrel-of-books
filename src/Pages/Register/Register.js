@@ -58,7 +58,7 @@ const Register = () => {
                     image: imgData.data.display_url,
                     role: role,
                   };
-                  fetch("https://barrel-of-books-server.vercel.app/users", {
+                  fetch("http://localhost:5000/users", {
                     method: "POST",
                     headers: {
                       "content-type": "application/json",
@@ -92,7 +92,7 @@ const Register = () => {
           image: user.photoURL,
           role: "Buyer",
         };
-        fetch("https://barrel-of-books-server.vercel.app/users", {
+        fetch("http://localhost:5000/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

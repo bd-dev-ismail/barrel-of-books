@@ -21,7 +21,7 @@ const MyProducts = () => {
     queryKey: ["myProducts", user?.email],
     queryFn: async () => {
       const res = await fetch(
-        `https://barrel-of-books-server.vercel.app/products?email=${user?.email}`,
+        `http://localhost:5000/products?email=${user?.email}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -34,7 +34,7 @@ const MyProducts = () => {
   });
   //delete product
   const handalDelete = (buyer) => {
-    fetch(`https://barrel-of-books-server.vercel.app/products/${buyer?._id}`, {
+    fetch(`http://localhost:5000/products/${buyer?._id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -51,7 +51,7 @@ const MyProducts = () => {
   //update product
   const makeAdvertise = (id) => {
     console.log(id);
-    fetch(`https://barrel-of-books-server.vercel.app/adproduct/${id}`, {
+    fetch(`http://localhost:5000/adproduct/${id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

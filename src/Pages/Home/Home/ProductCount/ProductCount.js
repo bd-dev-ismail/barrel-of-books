@@ -1,4 +1,5 @@
 import React from "react";
+import CountUp from "react-countup";
 
 const ProductCount = () => {
   return (
@@ -21,9 +22,20 @@ const ProductCount = () => {
                 />
               </svg>
             </div>
-            <h6 className="text-4xl font-bold text-deep-purple-accent-400">
-              819
-            </h6>
+            <CountUp start={0} end={819} delay={10}>
+              {({ countUpRef }) => (
+                <div>
+                  {/* <span /> */}
+                  <h6
+                    ref={countUpRef}
+                    className="text-4xl font-bold text-deep-purple-accent-400"
+                  >
+                    819
+                  </h6>
+                </div>
+              )}
+            </CountUp>
+
             <p className="mb-2 font-bold text-md">Visitors</p>
             <p className="text-gray-700">
               It’s something that’s many of the wisest people in history have
@@ -46,9 +58,19 @@ const ProductCount = () => {
                 />
               </svg>
             </div>
-            <h6 className="text-4xl font-bold text-deep-purple-accent-400">
-              1.3K
-            </h6>
+            <CountUp start={0} end={1300} delay={10}>
+              {({ countUpRef }) => (
+                <div>
+                  {/* <span /> */}
+                  <h6
+                    ref={countUpRef}
+                    className="text-4xl font-bold text-deep-purple-accent-400"
+                  >
+                    1300
+                  </h6>
+                </div>
+              )}
+            </CountUp>
             <p className="mb-2 font-bold text-md">Buyer</p>
             <p className="text-gray-700">
               For many men, the acquisition of wealth does not end their
@@ -71,9 +93,19 @@ const ProductCount = () => {
                 />
               </svg>
             </div>
-            <h6 className="text-4xl font-bold text-deep-purple-accent-400">
-              91
-            </h6>
+            <CountUp start={0} end={91} delay={10}>
+              {({ countUpRef }) => (
+                <div>
+                  {/* <span /> */}
+                  <h6
+                    ref={countUpRef}
+                    className="text-4xl font-bold text-deep-purple-accent-400"
+                  >
+                    91
+                  </h6>
+                </div>
+              )}
+            </CountUp>
             <p className="mb-2 font-bold text-md">Sellers</p>
             <p className="text-gray-700">
               It's a helluva start, being able to recognize what makes you happy
@@ -96,9 +128,19 @@ const ProductCount = () => {
                 />
               </svg>
             </div>
-            <h6 className="text-4xl font-bold text-deep-purple-accent-400">
-              52
-            </h6>
+            <CountUp start={0} end={52} delay={10}>
+              {({ countUpRef }) => (
+                <div>
+                  {/* <span /> */}
+                  <h6
+                    ref={countUpRef}
+                    className="text-4xl font-bold text-deep-purple-accent-400"
+                  >
+                    52
+                  </h6>
+                </div>
+              )}
+            </CountUp>
             <p className="mb-2 font-bold text-md">Products</p>
             <p className="text-gray-700">
               Happiness is when what you think, what you say, and what you do

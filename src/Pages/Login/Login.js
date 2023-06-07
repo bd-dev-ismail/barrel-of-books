@@ -52,7 +52,7 @@ const Login = () => {
           image: user.photoURL,
           role: "Buyer",
         };
-        fetch("https://barrel-of-books-server.vercel.app/users", {
+        fetch("http://localhost:5000/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

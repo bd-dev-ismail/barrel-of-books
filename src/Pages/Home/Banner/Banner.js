@@ -26,6 +26,7 @@ const Banner = () => {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
         autoplay
+        loop={true}
       >
         <SwiperSlide>
           <div

@@ -9,6 +9,7 @@ import ProductCount from "./ProductCount/ProductCount";
 import UpdatedCategoires from "../CategoriesSection/UpdatedCategoires";
 import ClientSection from "../ClientSection/ClientSection";
 import FaqSection from "../FaqSection/FaqSection";
+import Question from "../Question/Question";
 
 const Home = () => {
   return (
@@ -25,6 +26,7 @@ const Home = () => {
       <FaqSection />
       <ClientSection />
       <History />
+      <Question />
     </div>
   );
 };

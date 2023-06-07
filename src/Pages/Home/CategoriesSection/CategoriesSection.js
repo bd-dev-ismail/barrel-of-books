@@ -12,21 +12,19 @@ const CategoriesSection = () => {
   // const {data: categories = [], isLoading} = useQuery({
   //     queryKey: ['categories'],
   //     queryFn: async()=> {
-  //         const res = await fetch("https://barrel-of-books-server.vercel.app/categories");
+  //         const res = await fetch("http://localhost:5000/categories");
   //         const data = await res.json();
   //         return data;
   //     }
   // })
   useEffect(() => {
     setLoading(true);
-    axios
-      .get("https://barrel-of-books-server.vercel.app/categories")
-      .then(function (data) {
-        // handle success
+    axios.get("http://localhost:5000/categories").then(function (data) {
+      // handle success
 
-        setCategories(data.data);
-        setLoading(false);
-      });
+      setCategories(data.data);
+      setLoading(false);
+    });
   }, []);
   return (
     <div className="container mx-auto md:px-24 lg:px-8 my-24">

@@ -1,15 +1,14 @@
-
-import React, {  useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthProvider/AuthProvider';
-import Loader from '../../Shared/Loader/Loader';
+import React, { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider/AuthProvider";
+import Loader from "../../Shared/Loader/Loader";
 
 const BookingModal = ({ booking, userInfo, setBooking, refetch }) => {
   const [loading, setLoading] = useState(false);
   console.log("inside modal", booking);
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -22,13 +21,13 @@ const BookingModal = ({ booking, userInfo, setBooking, refetch }) => {
       sold: false,
     },
   });
-  
+
   const handleBooking = (data) => {
-   if (user?.email === booking.sellerEmail) {
-     return toast.error("You can not buy your product");
-   }
+    if (user?.email === booking.sellerEmail) {
+      return toast.error("You can not buy your product");
+    }
     setLoading(true);
-    fetch("https://barrel-of-books-server.vercel.app/orders", {
+    fetch("http://localhost:5000/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -46,7 +45,7 @@ const BookingModal = ({ booking, userInfo, setBooking, refetch }) => {
         }
       });
   };
-  const closeModal =()=> {
+  const closeModal = () => {
     // refetch();
     setBooking(null);
   };

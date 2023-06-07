@@ -19,20 +19,17 @@ const AllSeller = () => {
   } = useQuery({
     queryKey: ["seller"],
     queryFn: async () => {
-      const res = await fetch(
-        `https://barrel-of-books-server.vercel.app/seller`,
-        {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
+      const res = await fetch(`http://localhost:5000/seller`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
   });
   const handalDelete = (sellerr) => {
-    fetch(`https://barrel-of-books-server.vercel.app/seller/${sellerr?._id}`, {
+    fetch(`http://localhost:5000/seller/${sellerr?._id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -42,15 +39,12 @@ const AllSeller = () => {
       .then((data) => {
         if (data.deletedCount > 0) {
           refetch();
-          fetch(
-            `https://barrel-of-books-server.vercel.app/myproudct?email=${user?.email}`,
-            {
-              method: "DELETE",
-              headers: {
-                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              },
-            }
-          )
+          fetch(`http://localhost:5000/myproudct?email=${user?.email}`, {
+            method: "DELETE",
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          })
             .then((res) => res.json())
             .then((data) => {
               console.log("inside product remove", data);
@@ -61,7 +55,7 @@ const AllSeller = () => {
       });
   };
   const handelVerify = (sellerr) => {
-    fetch(`https://barrel-of-books-server.vercel.app/seller/${sellerr?._id}`, {
+    fetch(`http://localhost:5000/seller/${sellerr?._id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -73,15 +67,12 @@ const AllSeller = () => {
         if (data.modifiedCount > 0) {
           toast.success("Verifyed Seller Successfully!");
           refetch();
-          fetch(
-            `https://barrel-of-books-server.vercel.app/product?email=${sellerr?.email}`,
-            {
-              method: "PUT",
-              headers: {
-                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              },
-            }
-          )
+          fetch(`http://localhost:5000/product?email=${sellerr?.email}`, {
+            method: "PUT",
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          })
             .then((res) => res.json())
             .then((data) => {
               console.log(data, "call hoice");
